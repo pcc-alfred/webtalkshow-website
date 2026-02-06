@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://webtalk.show/sitemap-index.xml

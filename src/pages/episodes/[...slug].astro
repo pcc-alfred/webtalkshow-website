@@ -29,13 +29,46 @@ const prevEpisode = sortedEpisodes[currentIndex + 1]
 const nextEpisode = sortedEpisodes[currentIndex - 1]
 
 const hasTranscript = !!episode.data.transcript
+
+// YouTube thumbnail for episode image
+function getYouTubeThumbnail(url: string | undefined): string | null {
+  if (!url) return null
+  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/)
+  return match ? `https://img.youtube.com/vi/${match[1]}/maxresdefault.jpg` : null
+}
+const episodeImage = getYouTubeThumbnail(episode.data.youtubeUrl) || '/og-image.jpg'
+
+// JSON-LD for episode
+const episodeJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "PodcastEpisode",
+  "name": episode.data.title,
+  "description": episode.data.description,
+  "datePublished": episode.data.date.toISOString(),
+  "duration": `PT${episode.data.duration.replace(':', 'M')}S`,
+  "episodeNumber": episode.data.number,
+  "image": episodeImage,
+  "url": `https://webtalk.show/episodes/${episode.id}`,
+  "partOfSeries": {
+    "@type": "PodcastSeries",
+    "name": "The Web Talk Show",
+    "url": "https://webtalk.show"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Armando J. Perez-Carreno"
+  }
+}
 ---
 
 <Layout 
   title={`#${episode.data.number}: ${episode.data.title} - The Web Talk Show`}
   description={episode.data.description}
-  image={episode.data.image}
+  image={episodeImage}
 >
+  <!-- Episode JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(episodeJsonLd)} />
+  
   <article class="max-w-4xl mx-auto px-4 py-12">
     <!-- Episode Header -->
     <header class="mb-8">
