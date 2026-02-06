@@ -1,0 +1,147 @@
+---
+import '../styles/global.css'
+import SearchModal from '../components/SearchModal.astro'
+
+interface Props {
+  title: string
+  description?: string
+  image?: string
+}
+
+const { title, description = "The Web Talk Show - Learn what happens 'behind-the-scenes' in the day-to-day of different industries, and get inspired with what's possible.", image = '/og-image.png' } = Astro.props
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site)
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <title>{title}</title>
+    
+    <!-- Dark mode script (runs before render to prevent flash) -->
+    <script is:inline>
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    </script>
+  </head>
+  <body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors">
+    <!-- Header -->
+    <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 transition-colors">
+      <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3">
+          <img src="/logo.jpg" alt="The Web Talk Show" class="w-10 h-10 rounded-lg object-cover" />
+          <span class="font-bold text-xl hidden sm:inline">The Web Talk Show</span>
+        </a>
+        
+        <div class="flex items-center gap-4 sm:gap-6">
+          <a href="/episodes" class="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium">Episodes</a>
+          <button 
+            type="button"
+            onclick="openSearch()"
+            class="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium flex items-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <span class="hidden sm:inline">Search</span>
+            <kbd class="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-700 rounded border border-slate-200 dark:border-slate-600">
+              <span class="text-xs">⌘</span>K
+            </kbd>
+          </button>
+          <a href="/about" class="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium hidden sm:inline">About</a>
+          
+          <!-- Dark mode toggle -->
+          <button 
+            type="button"
+            id="theme-toggle"
+            class="p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+            aria-label="Toggle dark mode"
+          >
+            <!-- Sun icon (shown in dark mode) -->
+            <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+            <!-- Moon icon (shown in light mode) -->
+            <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 mt-auto">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="grid md:grid-cols-3 gap-8">
+          <div>
+            <h3 class="text-white font-semibold mb-4">The Web Talk Show</h3>
+            <p class="text-sm">A podcast about web development, technology, and the people who build the web.</p>
+          </div>
+          <div>
+            <h3 class="text-white font-semibold mb-4">Subscribe</h3>
+            <div class="flex flex-col gap-2 text-sm">
+              <a href="#" class="hover:text-white">Spotify</a>
+              <a href="#" class="hover:text-white">Apple Podcasts</a>
+              <a href="#" class="hover:text-white">YouTube</a>
+              <a href="/rss.xml" class="hover:text-white">RSS Feed</a>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-white font-semibold mb-4">Connect</h3>
+            <div class="flex flex-col gap-2 text-sm">
+              <a href="https://twitter.com/webtalkshow" class="hover:text-white">Twitter</a>
+              <a href="https://github.com/webtalkshow" class="hover:text-white">GitHub</a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-slate-800 mt-8 pt-8 text-sm text-center">
+          <p>&copy; {new Date().getFullYear()} The Web Talk Show. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Search Modal -->
+    <SearchModal />
+    
+    <!-- Dark mode toggle script -->
+    <script>
+      const themeToggle = document.getElementById('theme-toggle');
+      themeToggle?.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.theme = isDark ? 'dark' : 'light';
+      });
+    </script>
+  </body>
+</html>

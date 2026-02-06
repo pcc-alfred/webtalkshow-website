@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+  --color-accent: #f59e0b;
+}
+
+/* Custom audio player styles */
+.audio-player {
+  @apply bg-slate-900 rounded-xl p-4;
+}
+
+.audio-player audio {
+  @apply w-full;
+}
+
+/* Episode card hover effect */
+.episode-card {
+  @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-1;
+}
+
+/* Search highlight */
+mark {
+  @apply bg-yellow-200 px-0.5 rounded;
+  color: inherit;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prose/Typography styles for markdown content */
+.prose {
+  @apply text-slate-700 leading-relaxed;
+  max-width: 65ch;
+}
+
+.prose h1 {
+  @apply text-3xl font-bold text-slate-900 mt-8 mb-4;
+}
+
+.prose h2 {
+  @apply text-2xl font-bold text-slate-900 mt-8 mb-4;
+}
+
+.prose h3 {
+  @apply text-xl font-semibold text-slate-900 mt-6 mb-3;
+}
+
+.prose p {
+  @apply mb-4;
+}
+
+.prose a {
+  @apply text-indigo-600 underline hover:text-indigo-800;
+}
+
+.prose ul {
+  @apply list-disc pl-6 mb-4 space-y-2;
+}
+
+.prose ol {
+  @apply list-decimal pl-6 mb-4 space-y-2;
+}
+
+.prose li {
+  @apply text-slate-700;
+}
+
+.prose code {
+  @apply bg-slate-100 px-1.5 py-0.5 rounded text-sm font-mono text-slate-800;
+}
+
+.prose pre {
+  @apply bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto mb-4;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 text-inherit;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-slate-300 pl-4 italic text-slate-600 my-4;
+}
+
+.prose img {
+  @apply rounded-lg my-4;
+}
+
+.prose hr {
+  @apply border-slate-200 my-8;
+}
+
+.prose-slate {
+  @apply text-slate-700;
+}
+
+.prose-slate h1,
+.prose-slate h2,
+.prose-slate h3 {
+  @apply text-slate-900;
+}
+
+/* Transcript styling */
+.transcript {
+  @apply max-w-none;
+}
+
+.transcript p {
+  @apply mb-4;
+}

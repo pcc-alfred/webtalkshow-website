@@ -1,0 +1,59 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import EpisodeCard from '../../components/EpisodeCard.astro'
+import { getCollection } from 'astro:content'
+
+const allEpisodes = await getCollection('episodes')
+const episodes = allEpisodes.sort((a, b) => b.data.number - a.data.number)
+
+// Get all unique topics
+const allTopics = [...new Set(episodes.flatMap(e => e.data.topics || []))].sort()
+---
+
+<Layout title="All Episodes - The Web Talk Show">
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold mb-2">All Episodes</h1>
+      <p class="text-slate-600 dark:text-slate-400">{episodes.length} episodes and counting</p>
+    </div>
+    
+    <!-- Filter by topic (optional, can be enhanced with JS) -->
+    {allTopics.length > 0 && (
+      <div class="mb-8">
+        <div class="flex flex-wrap gap-2">
+          <span class="text-sm text-slate-500 dark:text-slate-400 mr-2 py-1">Filter by topic:</span>
+          {allTopics.slice(0, 10).map((topic) => (
+            <button 
+              class="px-3 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-sm rounded-full transition-colors"
+              data-topic={topic}
+            >
+              {topic}
+            </button>
+          ))}
+        </div>
+      </div>
+    )}
+    
+    <!-- Episodes Grid -->
+    <div class="grid md:grid-cols-2 gap-6">
+      {episodes.map((episode) => (
+        <EpisodeCard
+          number={episode.data.number}
+          title={episode.data.title}
+          description={episode.data.description}
+          date={episode.data.date}
+          duration={episode.data.duration}
+          slug={episode.id}
+          guests={episode.data.guests}
+          topics={episode.data.topics}
+        />
+      ))}
+    </div>
+    
+    {episodes.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-slate-500">No episodes yet. Stay tuned!</p>
+      </div>
+    )}
+  </div>
+</Layout>
