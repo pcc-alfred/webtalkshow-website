@@ -6,42 +6,46 @@ import Layout from '../layouts/Layout.astro'
   <div class="max-w-4xl mx-auto px-4 py-12">
     <h1 class="text-3xl font-bold mb-8">About The Web Talk Show</h1>
     
-    <div class="prose prose-slate max-w-none">
-      <p class="text-xl text-slate-600 mb-8">
-        The Web Talk Show is a podcast dedicated to exploring web development, technology, 
-        and the stories of the people who build the web.
+    <div class="prose prose-slate dark:prose-invert max-w-none">
+      <p class="text-xl text-slate-600 dark:text-slate-300 mb-8">
+        Learn what happens 'behind-the-scenes' in the day-to-day of different industries, 
+        and get inspired with what's possible.
       </p>
       
-      <h2>The Host</h2>
-      <div class="flex items-start gap-6 not-prose mb-8">
-        <div class="w-24 h-24 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex-shrink-0"></div>
-        <div>
-          <h3 class="text-xl font-semibold mb-2">Armando</h3>
-          <p class="text-slate-600">
-            A passionate web developer and technology enthusiast who loves diving deep into 
-            the tools, frameworks, and philosophies that shape modern web development.
+      <h2 class="dark:text-white">The Host</h2>
+      <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 not-prose mb-8 p-6 bg-slate-100 dark:bg-slate-800 rounded-xl">
+        <img 
+          src="/armando.jpg" 
+          alt="Armando J. Perez-Carreno" 
+          class="w-32 h-32 rounded-full object-cover shadow-lg flex-shrink-0"
+        />
+        <div class="text-center sm:text-left">
+          <h3 class="text-xl font-semibold mb-2">Armando J. Perez-Carreno</h3>
+          <p class="text-slate-600 dark:text-slate-300">
+            Armando helps business owners eliminate operational bottlenecks and scale profitably 
+            through custom AI automation tailored to their specific workflows.
           </p>
         </div>
       </div>
       
-      <h2>What We Talk About</h2>
-      <ul>
-        <li>Web development frameworks and tools</li>
-        <li>JavaScript, TypeScript, and modern frontend</li>
-        <li>Backend technologies and APIs</li>
-        <li>Developer experience and productivity</li>
-        <li>Open source projects and communities</li>
-        <li>Career advice and industry trends</li>
+      <h2 class="dark:text-white">What We Talk About</h2>
+      <ul class="dark:text-slate-300">
+        <li>AI automation and business workflows</li>
+        <li>Web development and modern technology</li>
+        <li>Behind-the-scenes stories from different industries</li>
+        <li>Entrepreneurship and scaling businesses</li>
+        <li>Practical tools and strategies that work</li>
+        <li>Inspiring conversations with industry experts</li>
       </ul>
       
-      <h2>Get in Touch</h2>
-      <p>
+      <h2 class="dark:text-white">Get in Touch</h2>
+      <p class="dark:text-slate-300">
         Have a topic suggestion or want to be a guest? Reach out!
       </p>
-      <ul>
-        <li>Twitter: <a href="https://twitter.com/webtalkshow">@webtalkshow</a></li>
+      <ul class="dark:text-slate-300">
+        <li>Twitter: <a href="https://twitter.com/webtalkshow" class="dark:text-indigo-400">@webtalkshow</a></li>
         <li>Email: hello@webtalkshow.com</li>
-        <li>GitHub: <a href="https://github.com/webtalkshow">github.com/webtalkshow</a></li>
+        <li>GitHub: <a href="https://github.com/webtalkshow" class="dark:text-indigo-400">github.com/webtalkshow</a></li>
       </ul>
     </div>
   </div>
