@@ -4,8 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://pcc-alfred.github.io',
-  base: '/webtalkshow-website',
+  site: 'https://webtalk.show',
   vite: {
     plugins: [tailwindcss()]
   }
