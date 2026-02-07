@@ -1,8 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import EpisodeCard from '../../components/EpisodeCard.astro'
 import { getCollection } from 'astro:content'
-
-const BAD_NAMES = new Set(['Atomic Blocks', 'Your Documents'])
 
 export async function getStaticPaths() {
   const allEpisodes = await getCollection('episodes')
@@ -101,27 +100,19 @@ const breadcrumbJsonLd = {
       <h2 class="text-xs font-semibold uppercase tracking-[0.15em] mb-6" style="color: var(--text-muted);">Episodes</h2>
 
       <div class="space-y-1">
-        {episodes.map((ep: any) => {
-          const formattedDate = ep.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
-          return (
-            <a href={`/episodes/${ep.id}`} class="group block py-5 px-4 sm:px-6 rounded-lg transition-all" style="border-bottom: 1px solid var(--border);">
-              <div class="flex items-start gap-4">
-                <span class="font-[var(--font-display)] text-3xl font-extrabold shrink-0 w-14 transition-colors duration-500 select-none" style="color: var(--number-color);">
-                  {String(ep.data.number).padStart(2, '0')}
-                </span>
-                <div class="flex-1 min-w-0">
-                  <h3 class="font-[var(--font-display)] font-bold text-lg leading-snug mb-1 group-hover:text-[#e63329] transition-colors" style="color: var(--text-heading);">{ep.data.title}</h3>
-                  <p class="text-sm line-clamp-2 mb-2" style="color: var(--text-muted);">{ep.data.description}</p>
-                  <div class="flex flex-wrap items-center gap-3 text-xs" style="color: var(--text-muted);">
-                    <span>{formattedDate}</span>
-                    <span style="color: var(--border);">·</span>
-                    <span>{ep.data.duration}</span>
-                  </div>
-                </div>
-              </div>
-            </a>
-          )
-        })}
+        {episodes.map((ep: any, i: number) => (
+          <EpisodeCard
+            number={ep.data.number}
+            title={ep.data.title}
+            description={ep.data.description}
+            date={ep.data.date}
+            duration={ep.data.duration}
+            slug={ep.id}
+            guests={ep.data.guests}
+            topics={ep.data.topics}
+            index={i}
+          />
+        ))}
       </div>
 
       <div class="mt-12 text-center">
