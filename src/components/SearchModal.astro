@@ -5,18 +5,19 @@
 <!-- Search Modal Backdrop -->
 <div 
   id="search-modal-backdrop" 
-  class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-200"
+  class="fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-200"
+  style="background: rgba(0,0,0,0.4); backdrop-filter: blur(4px);"
   role="dialog"
   aria-modal="true"
   aria-labelledby="search-modal-title"
 >
   <!-- Modal Container -->
   <div class="fixed inset-x-4 top-[10vh] md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-2xl z-50">
-    <div id="search-modal" class="bg-[#1a1a1a] rounded-xl shadow-2xl border border-white/10 overflow-hidden transform scale-95 opacity-0 transition-all duration-200">
+    <div id="search-modal" class="search-modal-box rounded-xl shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-200">
       <h2 id="search-modal-title" class="sr-only">Search episodes</h2>
       <!-- Search Header -->
-      <div class="flex items-center gap-3 px-4 py-3 border-b border-white/5">
-        <svg class="w-5 h-5 text-[#8a8a8a] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="flex items-center gap-3 px-4 py-3 search-modal-border-b">
+        <svg class="w-5 h-5 shrink-0" style="color: var(--text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
         <label for="search-input" class="sr-only">Search episodes</label>
@@ -24,30 +25,31 @@
           type="text" 
           id="search-input"
           placeholder="Search episodes..."
-          class="flex-1 text-lg outline-none bg-transparent text-white placeholder:text-[#8a8a8a] focus:ring-0"
+          class="flex-1 text-lg outline-none bg-transparent focus:ring-0"
+          style="color: var(--text-heading); --tw-placeholder-color: var(--text-muted);"
           autocomplete="off"
           autocapitalize="off"
           aria-describedby="search-empty"
         />
-        <kbd class="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-[#8a8a8a] bg-white/5 rounded border border-white/10">
+        <kbd class="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs font-medium rounded" style="color: var(--text-muted); background: var(--kbd-bg); border: 1px solid var(--kbd-border);">
           ESC
         </kbd>
       </div>
       
       <!-- Search Results -->
       <div id="search-results" class="max-h-[60vh] overflow-y-auto">
-        <div id="search-empty" class="px-4 py-8 text-center text-[#8a8a8a]">
+        <div id="search-empty" class="px-4 py-8 text-center" style="color: var(--text-muted);">
           <p>Type to search episodes, show notes, and transcripts</p>
-          <p class="text-sm mt-2 text-[#8a8a8a]/60">
-            <kbd class="px-1.5 py-0.5 text-xs bg-white/5 rounded border border-white/10">↑</kbd>
-            <kbd class="px-1.5 py-0.5 text-xs bg-white/5 rounded border border-white/10">↓</kbd>
+          <p class="text-sm mt-2" style="opacity: 0.6;">
+            <kbd class="px-1.5 py-0.5 text-xs rounded" style="background: var(--kbd-bg); border: 1px solid var(--kbd-border);">↑</kbd>
+            <kbd class="px-1.5 py-0.5 text-xs rounded" style="background: var(--kbd-bg); border: 1px solid var(--kbd-border);">↓</kbd>
             to navigate
-            <kbd class="px-1.5 py-0.5 text-xs bg-white/5 rounded border border-white/10 ml-2">↵</kbd>
+            <kbd class="px-1.5 py-0.5 text-xs rounded ml-2" style="background: var(--kbd-bg); border: 1px solid var(--kbd-border);">↵</kbd>
             to select
           </p>
         </div>
         
-        <div id="search-loading" class="px-4 py-8 text-center text-[#8a8a8a] hidden">
+        <div id="search-loading" class="px-4 py-8 text-center hidden" style="color: var(--text-muted);">
           <div class="inline-flex items-center gap-2">
             <svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -57,18 +59,18 @@
           </div>
         </div>
         
-        <div id="search-no-results" class="px-4 py-8 text-center text-[#8a8a8a] hidden">
+        <div id="search-no-results" class="px-4 py-8 text-center hidden" style="color: var(--text-muted);">
           No results found
         </div>
         
-        <ul id="search-results-list" class="divide-y divide-white/5 hidden"></ul>
+        <ul id="search-results-list" class="hidden"></ul>
       </div>
       
-      <div class="px-4 py-2 border-t border-white/5 bg-[#141414] text-xs text-[#8a8a8a]/60 flex items-center justify-between">
-        <span>Powered by PerezCarreno & Coindreau</span>
-        <span class="hidden sm:inline">
-          <kbd class="px-1.5 py-0.5 bg-white/5 rounded border border-white/10">⌘</kbd>
-          <kbd class="px-1.5 py-0.5 bg-white/5 rounded border border-white/10">K</kbd>
+      <div class="px-4 py-2 text-xs flex items-center justify-between search-modal-border-t search-modal-footer">
+        <span style="color: var(--text-muted); opacity: 0.6;">Powered by PerezCarreno & Coindreau</span>
+        <span class="hidden sm:inline" style="color: var(--text-muted); opacity: 0.6;">
+          <kbd class="px-1.5 py-0.5 rounded" style="background: var(--kbd-bg); border: 1px solid var(--kbd-border);">⌘</kbd>
+          <kbd class="px-1.5 py-0.5 rounded" style="background: var(--kbd-bg); border: 1px solid var(--kbd-border);">K</kbd>
           to toggle
         </span>
       </div>
@@ -77,25 +79,48 @@
 </div>
 
 <style is:global>
+  .search-modal-box {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+  }
+  .search-modal-border-b {
+    border-bottom: 1px solid var(--border);
+  }
+  .search-modal-border-t {
+    border-top: 1px solid var(--border);
+  }
+  .search-modal-footer {
+    background: var(--bg-surface);
+  }
+
+  #search-input::placeholder {
+    color: var(--text-muted);
+  }
+
   #search-results-list li {
     padding: 0.75rem 1rem;
     cursor: pointer;
     transition: background-color 0.15s;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  #search-results-list li:last-child {
+    border-bottom: none;
   }
   
   #search-results-list li:hover,
   #search-results-list li.selected {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: var(--card-hover);
   }
   
   #search-results-list li.selected {
-    background-color: rgba(230, 51, 41, 0.08);
+    background-color: rgba(230, 51, 41, 0.06);
   }
   
   #search-results-list .result-title {
     font-weight: 600;
     font-family: var(--font-display);
-    color: #fff;
+    color: var(--text-heading);
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -104,7 +129,7 @@
   
   #search-results-list .result-excerpt {
     font-size: 0.875rem;
-    color: #8a8a8a;
+    color: var(--text-muted);
     margin-top: 0.25rem;
     overflow: hidden;
     display: -webkit-box;
@@ -113,8 +138,8 @@
   }
   
   #search-results-list mark {
-    background-color: rgba(230, 51, 41, 0.3);
-    color: #fff;
+    background-color: rgba(230, 51, 41, 0.2);
+    color: var(--text-heading);
     border-radius: 0.125rem;
     padding: 0 0.125rem;
   }
@@ -122,7 +147,7 @@
   #search-results-list .sub-results {
     margin-top: 0.5rem;
     padding-left: 1rem;
-    border-left: 2px solid rgba(255, 255, 255, 0.1);
+    border-left: 2px solid var(--border);
   }
   
   #search-results-list .sub-results > * + * {
@@ -131,7 +156,7 @@
   
   #search-results-list .sub-result {
     font-size: 0.875rem;
-    color: #8a8a8a;
+    color: var(--text-muted);
   }
   
   #search-results-list .sub-result:hover {

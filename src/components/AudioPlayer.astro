@@ -10,10 +10,10 @@ interface Props {
 const { audioUrl, spotifyUrl, appleUrl, youtubeUrl, title } = Astro.props
 ---
 
-<div class="bg-[#1a1a1a] rounded-xl p-6 border border-white/5">
+<div class="rounded-xl p-6" style="background: var(--bg-elevated); border: 1px solid var(--border);">
   {audioUrl && (
     <div class="mb-4">
-      <audio controls class="w-full" preload="metadata" style="filter: invert(1) hue-rotate(180deg); opacity: 0.8;">
+      <audio controls class="w-full audio-native" preload="metadata">
         <source src={audioUrl} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
