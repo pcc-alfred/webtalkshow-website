@@ -3,31 +3,32 @@ import Layout from '../layouts/Layout.astro'
 ---
 
 <Layout title="About - The Web Talk Show">
-  <div class="max-w-4xl mx-auto px-4 py-12">
-    <h1 class="text-3xl font-bold mb-8">About The Web Talk Show</h1>
-    
-    <div class="prose prose-slate dark:prose-invert max-w-none">
-      <p class="text-xl text-slate-600 dark:text-slate-300 mb-8">
-        Learn what happens 'behind-the-scenes' in the day-to-day of different industries, 
-        and get inspired with what's possible.
-      </p>
+  <div class="pt-24 pb-16">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <h1 class="font-[var(--font-display)] font-extrabold text-white text-4xl sm:text-5xl tracking-tight mb-6">About</h1>
       
-      <h2 class="dark:text-white">The Host</h2>
-      <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 not-prose mb-8 p-6 bg-slate-100 dark:bg-slate-800 rounded-xl">
-        <img 
-          src="/armando.jpg" 
-          alt="Armando J. Perez-Carreno" 
-          class="w-32 h-32 rounded-full object-cover shadow-lg flex-shrink-0"
-        />
-        <div class="text-center sm:text-left">
-          <h3 class="text-xl font-semibold mb-2">Armando J. Perez-Carreno</h3>
-          <p class="text-slate-600 dark:text-slate-300">
-            Armando helps business owners eliminate operational bottlenecks and scale profitably 
-            through custom AI automation tailored to their specific workflows.
-          </p>
+      <div class="prose max-w-none">
+        <p class="text-xl text-[#d4d4d4]/80 mb-10 leading-relaxed">
+          Learn what happens 'behind-the-scenes' in the day-to-day of different industries, 
+          and get inspired with what's possible.
+        </p>
+        
+        <h2 class="font-[var(--font-display)] text-white text-2xl font-bold mb-6">The Host</h2>
+        <div class="not-prose flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-10 p-6 bg-[#1a1a1a] rounded-xl border border-white/5">
+          <img 
+            src="/armando.jpg" 
+            alt="Armando J. Perez-Carreno" 
+            class="w-28 h-28 rounded-full object-cover ring-2 ring-[#e63329]/20 flex-shrink-0"
+          />
+          <div class="text-center sm:text-left">
+            <h3 class="font-[var(--font-display)] text-xl font-bold text-white mb-2">Armando J. Perez-Carreno</h3>
+            <p class="text-[#8a8a8a] leading-relaxed">
+              Armando helps business owners eliminate operational bottlenecks and scale profitably 
+              through custom AI automation tailored to their specific workflows.
+            </p>
+          </div>
         </div>
       </div>
-      
-      </div>
+    </div>
   </div>
 </Layout>

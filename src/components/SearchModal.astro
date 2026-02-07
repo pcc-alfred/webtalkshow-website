@@ -5,18 +5,18 @@
 <!-- Search Modal Backdrop -->
 <div 
   id="search-modal-backdrop" 
-  class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-200"
+  class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-200"
   role="dialog"
   aria-modal="true"
   aria-labelledby="search-modal-title"
 >
   <!-- Modal Container -->
   <div class="fixed inset-x-4 top-[10vh] md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-2xl z-50">
-    <div id="search-modal" class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden transform scale-95 opacity-0 transition-all duration-200">
+    <div id="search-modal" class="bg-[#1a1a1a] rounded-xl shadow-2xl border border-white/10 overflow-hidden transform scale-95 opacity-0 transition-all duration-200">
       <h2 id="search-modal-title" class="sr-only">Search episodes</h2>
       <!-- Search Header -->
-      <div class="flex items-center gap-3 px-4 py-3 border-b border-slate-200 dark:border-slate-700">
-        <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="flex items-center gap-3 px-4 py-3 border-b border-white/5">
+        <svg class="w-5 h-5 text-[#8a8a8a] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
         <label for="search-input" class="sr-only">Search episodes</label>
@@ -24,32 +24,30 @@
           type="text" 
           id="search-input"
           placeholder="Search episodes..."
-          class="flex-1 text-lg outline-none bg-transparent placeholder:text-slate-400 dark:placeholder:text-slate-500 dark:text-white focus:ring-0"
+          class="flex-1 text-lg outline-none bg-transparent text-white placeholder:text-[#8a8a8a] focus:ring-0"
           autocomplete="off"
           autocapitalize="off"
           aria-describedby="search-empty"
         />
-        <kbd class="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-slate-400 bg-slate-100 dark:bg-slate-700 dark:text-slate-400 rounded">
+        <kbd class="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-[#8a8a8a] bg-white/5 rounded border border-white/10">
           ESC
         </kbd>
       </div>
       
       <!-- Search Results -->
       <div id="search-results" class="max-h-[60vh] overflow-y-auto">
-        <!-- Initial state -->
-        <div id="search-empty" class="px-4 py-8 text-center text-slate-500 dark:text-slate-400">
+        <div id="search-empty" class="px-4 py-8 text-center text-[#8a8a8a]">
           <p>Type to search episodes, show notes, and transcripts</p>
-          <p class="text-sm mt-2 text-slate-400 dark:text-slate-500">
-            <kbd class="px-1.5 py-0.5 text-xs bg-slate-100 dark:bg-slate-700 rounded">↑</kbd>
-            <kbd class="px-1.5 py-0.5 text-xs bg-slate-100 dark:bg-slate-700 rounded">↓</kbd>
+          <p class="text-sm mt-2 text-[#8a8a8a]/60">
+            <kbd class="px-1.5 py-0.5 text-xs bg-white/5 rounded border border-white/10">↑</kbd>
+            <kbd class="px-1.5 py-0.5 text-xs bg-white/5 rounded border border-white/10">↓</kbd>
             to navigate
-            <kbd class="px-1.5 py-0.5 text-xs bg-slate-100 dark:bg-slate-700 rounded ml-2">↵</kbd>
+            <kbd class="px-1.5 py-0.5 text-xs bg-white/5 rounded border border-white/10 ml-2">↵</kbd>
             to select
           </p>
         </div>
         
-        <!-- Loading state -->
-        <div id="search-loading" class="px-4 py-8 text-center text-slate-500 dark:text-slate-400 hidden">
+        <div id="search-loading" class="px-4 py-8 text-center text-[#8a8a8a] hidden">
           <div class="inline-flex items-center gap-2">
             <svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -59,21 +57,18 @@
           </div>
         </div>
         
-        <!-- No results -->
-        <div id="search-no-results" class="px-4 py-8 text-center text-slate-500 dark:text-slate-400 hidden">
+        <div id="search-no-results" class="px-4 py-8 text-center text-[#8a8a8a] hidden">
           No results found
         </div>
         
-        <!-- Results list -->
-        <ul id="search-results-list" class="divide-y divide-slate-100 dark:divide-slate-700 hidden"></ul>
+        <ul id="search-results-list" class="divide-y divide-white/5 hidden"></ul>
       </div>
       
-      <!-- Footer -->
-      <div class="px-4 py-2 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs text-slate-400 flex items-center justify-between">
+      <div class="px-4 py-2 border-t border-white/5 bg-[#141414] text-xs text-[#8a8a8a]/60 flex items-center justify-between">
         <span>Powered by PerezCarreno & Coindreau</span>
         <span class="hidden sm:inline">
-          <kbd class="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700 rounded">⌘</kbd>
-          <kbd class="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700 rounded">K</kbd>
+          <kbd class="px-1.5 py-0.5 bg-white/5 rounded border border-white/10">⌘</kbd>
+          <kbd class="px-1.5 py-0.5 bg-white/5 rounded border border-white/10">K</kbd>
           to toggle
         </span>
       </div>
@@ -90,38 +85,26 @@
   
   #search-results-list li:hover,
   #search-results-list li.selected {
-    background-color: rgb(238 242 255); /* indigo-50 */
-  }
-  
-  .dark #search-results-list li:hover,
-  .dark #search-results-list li.selected {
-    background-color: rgb(51 65 85); /* slate-700 */
+    background-color: rgba(255, 255, 255, 0.05);
   }
   
   #search-results-list li.selected {
-    background-color: rgb(224 231 255); /* indigo-100 */
-  }
-  
-  .dark #search-results-list li.selected {
-    background-color: rgb(71 85 105); /* slate-600 */
+    background-color: rgba(230, 51, 41, 0.08);
   }
   
   #search-results-list .result-title {
     font-weight: 600;
-    color: rgb(15 23 42); /* slate-900 */
+    font-family: var(--font-display);
+    color: #fff;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
   }
   
-  .dark #search-results-list .result-title {
-    color: rgb(255 255 255); /* white */
-  }
-  
   #search-results-list .result-excerpt {
     font-size: 0.875rem;
-    color: rgb(71 85 105); /* slate-600 */
+    color: #8a8a8a;
     margin-top: 0.25rem;
     overflow: hidden;
     display: -webkit-box;
@@ -129,31 +112,17 @@
     -webkit-line-clamp: 2;
   }
   
-  .dark #search-results-list .result-excerpt {
-    color: rgb(203 213 225); /* slate-300 */
-  }
-  
   #search-results-list mark {
-    background-color: rgb(254 240 138); /* yellow-200 */
-    color: inherit;
+    background-color: rgba(230, 51, 41, 0.3);
+    color: #fff;
     border-radius: 0.125rem;
     padding: 0 0.125rem;
   }
   
-  .dark #search-results-list mark {
-    background-color: rgb(202 138 4); /* yellow-600 */
-    color: rgb(255 255 255);
-  }
-  
-  /* Sub-results */
   #search-results-list .sub-results {
     margin-top: 0.5rem;
     padding-left: 1rem;
-    border-left: 2px solid rgb(226 232 240); /* slate-200 */
-  }
-  
-  .dark #search-results-list .sub-results {
-    border-left-color: rgb(71 85 105); /* slate-600 */
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
   }
   
   #search-results-list .sub-results > * + * {
@@ -162,19 +131,11 @@
   
   #search-results-list .sub-result {
     font-size: 0.875rem;
-    color: rgb(71 85 105); /* slate-600 */
-  }
-  
-  .dark #search-results-list .sub-result {
-    color: rgb(148 163 184); /* slate-400 */
+    color: #8a8a8a;
   }
   
   #search-results-list .sub-result:hover {
-    color: rgb(79 70 229); /* indigo-600 */
-  }
-  
-  .dark #search-results-list .sub-result:hover {
-    color: rgb(129 140 248); /* indigo-400 */
+    color: #e63329;
   }
 </style>
 
@@ -191,11 +152,9 @@
   const loadingState = document.getElementById('search-loading')!;
   const noResults = document.getElementById('search-no-results')!;
   
-  // Initialize Pagefind
   async function initPagefind() {
     if (pagefind) return pagefind;
     try {
-      // Use dynamic import with variable to prevent Vite from bundling
       const pagefindPath = '/pagefind/pagefind.js';
       pagefind = await import(/* @vite-ignore */ pagefindPath);
       await pagefind.options({ excerptLength: 15 });
@@ -206,7 +165,6 @@
     }
   }
   
-  // Open modal
   function openSearch() {
     backdrop.classList.remove('hidden');
     requestAnimationFrame(() => {
@@ -218,7 +176,6 @@
     initPagefind();
   }
   
-  // Close modal
   function closeSearch() {
     backdrop.classList.add('opacity-0');
     modal.classList.add('scale-95', 'opacity-0');
@@ -230,7 +187,6 @@
     document.body.style.overflow = '';
   }
   
-  // Reset results display
   function resetResults() {
     results = [];
     selectedIndex = -1;
@@ -241,66 +197,41 @@
     emptyState.classList.remove('hidden');
   }
   
-  // Perform search
   let searchTimeout: number;
   async function performSearch(query: string) {
-    if (!query.trim()) {
-      resetResults();
-      return;
-    }
-    
+    if (!query.trim()) { resetResults(); return; }
     const pf = await initPagefind();
     if (!pf) return;
-    
-    // Show loading
     emptyState.classList.add('hidden');
     noResults.classList.add('hidden');
     resultsList.classList.add('hidden');
     loadingState.classList.remove('hidden');
-    
     const search = await pf.search(query);
     results = search.results.slice(0, 10);
-    
     loadingState.classList.add('hidden');
-    
-    if (results.length === 0) {
-      noResults.classList.remove('hidden');
-      return;
-    }
-    
-    // Render results
+    if (results.length === 0) { noResults.classList.remove('hidden'); return; }
     resultsList.innerHTML = '';
     for (let i = 0; i < results.length; i++) {
       const data = await results[i].data();
       const li = document.createElement('li');
       li.dataset.index = String(i);
       li.dataset.url = data.meta?.url || data.url;
-      
-      let html = `
-        <div class="result-title">${data.meta?.title || 'Untitled'}</div>
-        <div class="result-excerpt">${data.excerpt}</div>
-      `;
-      
-      // Add sub-results if available
+      let html = `<div class="result-title">${data.meta?.title || 'Untitled'}</div><div class="result-excerpt">${data.excerpt}</div>`;
       if (data.sub_results && data.sub_results.length > 1) {
         html += '<div class="sub-results">';
-        const subs = data.sub_results.slice(1, 4);
-        for (const sub of subs) {
+        for (const sub of data.sub_results.slice(1, 4)) {
           html += `<a href="${sub.url}" class="sub-result block">${sub.title}</a>`;
         }
         html += '</div>';
       }
-      
       li.innerHTML = html;
       li.addEventListener('click', () => navigateToResult(i));
       resultsList.appendChild(li);
     }
-    
     resultsList.classList.remove('hidden');
     selectedIndex = -1;
   }
   
-  // Navigate to selected result
   function navigateToResult(index: number) {
     if (results[index]) {
       results[index].data().then((data: any) => {
@@ -309,75 +240,35 @@
     }
   }
   
-  // Update selection highlight
   function updateSelection() {
     const items = resultsList.querySelectorAll('li');
-    items.forEach((item, i) => {
-      item.classList.toggle('selected', i === selectedIndex);
-    });
-    
-    // Scroll into view
+    items.forEach((item, i) => { item.classList.toggle('selected', i === selectedIndex); });
     if (selectedIndex >= 0 && items[selectedIndex]) {
       items[selectedIndex].scrollIntoView({ block: 'nearest' });
     }
   }
   
-  // Keyboard navigation
   function handleKeyDown(e: KeyboardEvent) {
     if (!backdrop.classList.contains('hidden')) {
-      if (e.key === 'Escape') {
-        closeSearch();
-      } else if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        if (results.length > 0) {
-          selectedIndex = Math.min(selectedIndex + 1, results.length - 1);
-          updateSelection();
-        }
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        if (results.length > 0) {
-          selectedIndex = Math.max(selectedIndex - 1, 0);
-          updateSelection();
-        }
-      } else if (e.key === 'Enter' && selectedIndex >= 0) {
-        e.preventDefault();
-        navigateToResult(selectedIndex);
-      }
+      if (e.key === 'Escape') closeSearch();
+      else if (e.key === 'ArrowDown') { e.preventDefault(); if (results.length > 0) { selectedIndex = Math.min(selectedIndex + 1, results.length - 1); updateSelection(); } }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); if (results.length > 0) { selectedIndex = Math.max(selectedIndex - 1, 0); updateSelection(); } }
+      else if (e.key === 'Enter' && selectedIndex >= 0) { e.preventDefault(); navigateToResult(selectedIndex); }
     }
-    
-    // cmd+K / ctrl+K to toggle
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
       e.preventDefault();
-      if (backdrop.classList.contains('hidden')) {
-        openSearch();
-      } else {
-        closeSearch();
-      }
+      backdrop.classList.contains('hidden') ? openSearch() : closeSearch();
     }
   }
   
-  // Event listeners
   document.addEventListener('keydown', handleKeyDown);
-  
-  backdrop.addEventListener('click', (e) => {
-    if (e.target === backdrop) closeSearch();
-  });
-  
+  backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeSearch(); });
   input.addEventListener('input', (e) => {
     clearTimeout(searchTimeout);
-    searchTimeout = window.setTimeout(() => {
-      performSearch((e.target as HTMLInputElement).value);
-    }, 150);
+    searchTimeout = window.setTimeout(() => performSearch((e.target as HTMLInputElement).value), 150);
   });
-  
-  // Expose open function globally for nav link
   (window as any).openSearch = openSearch;
-  
-  // Handle search links
   document.querySelectorAll('a[href="/search"]').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      openSearch();
-    });
+    link.addEventListener('click', (e) => { e.preventDefault(); openSearch(); });
   });
 </script>

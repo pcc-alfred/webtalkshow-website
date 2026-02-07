@@ -6,54 +6,94 @@ import { getCollection } from 'astro:content'
 const allEpisodes = await getCollection('episodes')
 const episodes = allEpisodes.sort((a, b) => b.data.number - a.data.number)
 
-// Get all unique topics
 const allTopics = [...new Set(episodes.flatMap(e => e.data.topics || []))].sort()
 ---
 
 <Layout title="All Episodes - The Web Talk Show">
-  <div class="max-w-6xl mx-auto px-4 py-12">
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold mb-2">All Episodes</h1>
-      <p class="text-slate-600 dark:text-slate-400">{episodes.length} episodes and counting</p>
-    </div>
-    
-    <!-- Filter by topic (optional, can be enhanced with JS) -->
-    {allTopics.length > 0 && (
-      <div class="mb-8">
-        <div class="flex flex-wrap gap-2">
-          <span class="text-sm text-slate-500 dark:text-slate-400 mr-2 py-1">Filter by topic:</span>
-          {allTopics.slice(0, 10).map((topic) => (
+  <div class="pt-24 pb-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <!-- Header -->
+      <div class="mb-12">
+        <h1 class="font-[var(--font-display)] font-extrabold text-white text-4xl sm:text-5xl tracking-tight mb-3">Episodes</h1>
+        <p class="text-[#8a8a8a] text-lg">{episodes.length} episodes and counting</p>
+      </div>
+      
+      <!-- Topic filters -->
+      {allTopics.length > 0 && (
+        <div class="mb-10">
+          <div class="flex flex-wrap gap-2">
             <button 
-              class="px-3 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-sm rounded-full transition-colors"
-              data-topic={topic}
+              class="topic-filter px-3 py-1.5 bg-[#e63329]/15 text-[#e63329] text-sm rounded-full transition-all border border-[#e63329]/20 font-medium"
+              data-topic="all"
             >
-              {topic}
+              All
             </button>
-          ))}
+            {allTopics.slice(0, 12).map((topic) => (
+              <button 
+                class="topic-filter px-3 py-1.5 bg-white/5 hover:bg-white/10 text-[#8a8a8a] hover:text-white text-sm rounded-full transition-all border border-white/5 hover:border-white/10"
+                data-topic={topic}
+              >
+                {topic}
+              </button>
+            ))}
+          </div>
         </div>
+      )}
+      
+      <!-- Episodes List -->
+      <div class="space-y-1" id="episodes-list">
+        {episodes.map((episode, i) => (
+          <div data-topics={JSON.stringify(episode.data.topics || [])}>
+            <EpisodeCard
+              number={episode.data.number}
+              title={episode.data.title}
+              description={episode.data.description}
+              date={episode.data.date}
+              duration={episode.data.duration}
+              slug={episode.id}
+              guests={episode.data.guests}
+              topics={episode.data.topics}
+              index={i}
+            />
+          </div>
+        ))}
       </div>
-    )}
-    
-    <!-- Episodes Grid -->
-    <div class="grid md:grid-cols-2 gap-6">
-      {episodes.map((episode) => (
-        <EpisodeCard
-          number={episode.data.number}
-          title={episode.data.title}
-          description={episode.data.description}
-          date={episode.data.date}
-          duration={episode.data.duration}
-          slug={episode.id}
-          guests={episode.data.guests}
-          topics={episode.data.topics}
-        />
-      ))}
+      
+      {episodes.length === 0 && (
+        <div class="text-center py-16">
+          <p class="text-[#8a8a8a]">No episodes yet. Stay tuned!</p>
+        </div>
+      )}
     </div>
-    
-    {episodes.length === 0 && (
-      <div class="text-center py-12">
-        <p class="text-slate-500">No episodes yet. Stay tuned!</p>
-      </div>
-    )}
   </div>
 </Layout>
+
+<script>
+  // Topic filtering
+  const buttons = document.querySelectorAll('.topic-filter');
+  const items = document.querySelectorAll('#episodes-list > div[data-topics]');
+  
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const topic = (btn as HTMLElement).dataset.topic;
+      
+      // Update active state
+      buttons.forEach(b => {
+        b.classList.remove('bg-[#e63329]/15', 'text-[#e63329]', 'border-[#e63329]/20', 'font-medium');
+        b.classList.add('bg-white/5', 'text-[#8a8a8a]', 'border-white/5');
+      });
+      btn.classList.remove('bg-white/5', 'text-[#8a8a8a]', 'border-white/5');
+      btn.classList.add('bg-[#e63329]/15', 'text-[#e63329]', 'border-[#e63329]/20', 'font-medium');
+      
+      // Filter episodes
+      items.forEach(item => {
+        if (topic === 'all') {
+          (item as HTMLElement).style.display = '';
+          return;
+        }
+        const topics = JSON.parse((item as HTMLElement).dataset.topics || '[]');
+        (item as HTMLElement).style.display = topics.includes(topic) ? '' : 'none';
+      });
+    });
+  });
+</script>
