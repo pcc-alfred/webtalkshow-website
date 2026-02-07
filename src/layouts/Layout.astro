@@ -6,15 +6,16 @@ interface Props {
   title: string
   description?: string
   image?: string
+  transparentHeader?: boolean
 }
 
-const { title, description = "The Web Talk Show - Learn what happens 'behind-the-scenes' in the day-to-day of different industries, and get inspired with what's possible.", image = '/og-image.jpg' } = Astro.props
+const { title, description = "The Web Talk Show - Learn what happens 'behind-the-scenes' in the day-to-day of different industries, and get inspired with what's possible.", image = '/og-image.jpg', transparentHeader = false } = Astro.props
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site)
 const absoluteImageUrl = new URL(image, Astro.site).toString()
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -42,10 +43,10 @@ const absoluteImageUrl = new URL(image, Astro.site).toString()
     <meta name="robots" content="index, follow" />
     <link rel="alternate" type="application/rss+xml" title="The Web Talk Show RSS Feed" href="/rss.xml" />
     
-    <!-- Fonts -->
+    <!-- Fonts: Syne (display) + DM Sans (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
     
     <title>{title}</title>
     
@@ -69,63 +70,66 @@ const absoluteImageUrl = new URL(image, Astro.site).toString()
       "webFeed": "https://webtalk.show/rss.xml"
     })} />
     
-    <!-- Dark mode script (runs before render to prevent flash) -->
+    <!-- Dark mode script -->
     <script is:inline>
-      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark')
-      } else {
+      if (localStorage.theme === 'light') {
         document.documentElement.classList.remove('dark')
+        document.documentElement.classList.add('light')
       }
     </script>
   </head>
-  <body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors">
-    <!-- Skip to main content link (WCAG 2.4.1) -->
+  <body class="bg-[#0a0a0a] text-[#d4d4d4] min-h-screen flex flex-col font-[var(--font-sans)] transition-colors dark:bg-[#0a0a0a] dark:text-[#d4d4d4]">
+    <!-- Skip to main content -->
     <a 
       href="#main-content" 
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-indigo-600 focus:text-white focus:rounded-lg focus:outline-none"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[#e63329] focus:text-white focus:rounded-lg focus:outline-none"
     >
       Skip to main content
     </a>
     
     <!-- Header -->
-    <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 transition-colors">
-      <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-3">
-          <img src="/logo.jpg" alt="The Web Talk Show" class="w-10 h-10 rounded-lg object-cover" />
-          <span class="font-bold text-xl hidden sm:inline">The Web Talk Show</span>
+    <header 
+      id="site-header"
+      class:list={[
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        transparentHeader ? "header-transparent" : "bg-[#0a0a0a]/95 backdrop-blur-md border-b border-white/5"
+      ]}
+    >
+      <nav class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-3 group">
+          <img src="/logo.jpg" alt="The Web Talk Show" class="w-9 h-9 rounded-lg object-cover ring-1 ring-white/10" />
+          <span class="font-[var(--font-display)] font-bold text-lg text-white hidden sm:inline tracking-tight">The Web Talk Show</span>
         </a>
         
-        <div class="flex items-center gap-4 sm:gap-6">
-          <a href="/episodes" class="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium">Episodes</a>
+        <div class="flex items-center gap-5">
+          <a href="/episodes" class="text-[#8a8a8a] hover:text-white text-sm font-medium transition-colors">Episodes</a>
           <button 
             type="button"
             onclick="openSearch()"
             aria-label="Open search (Press Command K)"
-            class="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800 rounded-lg"
+            class="text-[#8a8a8a] hover:text-white text-sm font-medium flex items-center gap-2 transition-colors"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
             <span class="hidden sm:inline">Search</span>
-            <kbd class="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-700 rounded border border-slate-200 dark:border-slate-600">
+            <kbd class="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs text-[#8a8a8a] bg-white/5 rounded border border-white/10">
               <span class="text-xs">⌘</span>K
             </kbd>
           </button>
-          <a href="/about" class="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-medium hidden sm:inline">About</a>
+          <a href="/about" class="text-[#8a8a8a] hover:text-white text-sm font-medium transition-colors hidden sm:inline">About</a>
           
           <!-- Dark mode toggle -->
           <button 
             type="button"
             id="theme-toggle"
-            class="p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors"
+            class="p-2 text-[#8a8a8a] hover:text-white hover:bg-white/5 rounded-lg transition-colors"
             aria-label="Toggle dark mode"
           >
-            <!-- Sun icon (shown in dark mode) -->
-            <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
             </svg>
-            <!-- Moon icon (shown in light mode) -->
-            <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
             </svg>
           </button>
@@ -139,31 +143,37 @@ const absoluteImageUrl = new URL(image, Astro.site).toString()
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-12 mt-auto">
-      <div class="max-w-6xl mx-auto px-4">
+    <footer class="bg-[#050505] border-t border-white/5 mt-auto relative overflow-hidden">
+      <!-- Waveform decoration -->
+      <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#e63329]/20 to-transparent"></div>
+      <svg class="absolute top-4 left-0 w-full h-12 opacity-[0.04]" viewBox="0 0 1440 48" preserveAspectRatio="none">
+        <path d="M0 24 Q180 0 360 24 Q540 48 720 24 Q900 0 1080 24 Q1260 48 1440 24" stroke="#e63329" stroke-width="2" fill="none"/>
+      </svg>
+      
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 relative z-10">
         <div class="grid md:grid-cols-3 gap-8">
           <div>
-            <h3 class="text-white font-semibold mb-4">The Web Talk Show</h3>
-            <p class="text-sm">A podcast about web development, technology, and the people who build the web.</p>
+            <h3 class="text-white font-[var(--font-display)] font-bold text-lg mb-4">The Web Talk Show</h3>
+            <p class="text-sm text-[#8a8a8a]">Behind-the-scenes conversations about technology, business, and the people who build things.</p>
           </div>
           <div>
-            <h3 class="text-white font-semibold mb-4">Subscribe</h3>
+            <h3 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Subscribe</h3>
             <div class="flex flex-col gap-2 text-sm">
-              <a href="#" class="hover:text-white">Spotify</a>
-              <a href="#" class="hover:text-white">Apple Podcasts</a>
-              <a href="#" class="hover:text-white">YouTube</a>
-              <a href="/rss.xml" class="hover:text-white">RSS Feed</a>
+              <a href="https://open.spotify.com/show/00BTCbkMIG7mjeTP9zlsIq" class="text-[#8a8a8a] hover:text-[#1DB954] transition-colors">Spotify</a>
+              <a href="https://podcasts.apple.com/us/podcast/the-web-talk-show/id1822997923" class="text-[#8a8a8a] hover:text-[#fc3c44] transition-colors">Apple Podcasts</a>
+              <a href="https://www.youtube.com/playlist?list=PL1CI93sNrODNNJppF8HFcDKDHQVHLHN8v" class="text-[#8a8a8a] hover:text-[#FF0000] transition-colors">YouTube</a>
+              <a href="/rss.xml" class="text-[#8a8a8a] hover:text-orange-400 transition-colors">RSS Feed</a>
             </div>
           </div>
           <div>
-            <h3 class="text-white font-semibold mb-4">Connect</h3>
+            <h3 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Connect</h3>
             <div class="flex flex-col gap-2 text-sm">
-              <a href="https://twitter.com/webtalkshow" class="hover:text-white">Twitter</a>
-              <a href="https://github.com/webtalkshow" class="hover:text-white">GitHub</a>
+              <a href="https://twitter.com/webtalkshow" class="text-[#8a8a8a] hover:text-white transition-colors">Twitter</a>
+              <a href="https://github.com/webtalkshow" class="text-[#8a8a8a] hover:text-white transition-colors">GitHub</a>
             </div>
           </div>
         </div>
-        <div class="border-t border-slate-800 mt-8 pt-8 text-sm text-center">
+        <div class="border-t border-white/5 mt-8 pt-8 text-sm text-center text-[#8a8a8a]">
           <p>&copy; {new Date().getFullYear()} The Web Talk Show. All rights reserved.</p>
         </div>
       </div>
@@ -172,13 +182,48 @@ const absoluteImageUrl = new URL(image, Astro.site).toString()
     <!-- Search Modal -->
     <SearchModal />
     
-    <!-- Dark mode toggle script -->
+    <!-- Scripts -->
     <script>
+      // Dark mode toggle
       const themeToggle = document.getElementById('theme-toggle');
       themeToggle?.addEventListener('click', () => {
-        const isDark = document.documentElement.classList.toggle('dark');
-        localStorage.theme = isDark ? 'dark' : 'light';
+        const isCurrentlyDark = document.documentElement.classList.contains('dark');
+        if (isCurrentlyDark) {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('light');
+          localStorage.theme = 'light';
+        } else {
+          document.documentElement.classList.remove('light');
+          document.documentElement.classList.add('dark');
+          localStorage.theme = 'dark';
+        }
       });
+
+      // Transparent header scroll behavior
+      const header = document.getElementById('site-header');
+      if (header?.classList.contains('header-transparent')) {
+        const onScroll = () => {
+          if (window.scrollY > 50) {
+            header.classList.add('header-scrolled');
+          } else {
+            header.classList.remove('header-scrolled');
+          }
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      }
     </script>
   </body>
 </html>
+
+<style>
+  .header-transparent {
+    background: transparent;
+    border-bottom: 1px solid transparent;
+  }
+  .header-transparent.header-scrolled {
+    background: rgba(10, 10, 10, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+  }
+</style>
