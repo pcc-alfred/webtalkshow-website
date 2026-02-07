@@ -147,8 +147,8 @@ const latestThumbnail = getYouTubeThumbnail(latestEpisode?.data.youtubeUrl)
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       <div class="flex items-end justify-between mb-12">
         <div>
-          <h2 class="font-[var(--font-display)] font-extrabold text-white text-3xl sm:text-4xl tracking-tight">Recent Episodes</h2>
-          <p class="text-[#8a8a8a] mt-2">{allEpisodes.length} episodes and counting</p>
+          <h2 class="font-[var(--font-display)] font-extrabold text-3xl sm:text-4xl tracking-tight" style="color: var(--text-heading);">Recent Episodes</h2>
+          <p class="mt-2" style="color: var(--text-muted);">{allEpisodes.length} episodes and counting</p>
         </div>
         <a href="/episodes" class="text-[#e63329] hover:text-[#c42a22] text-sm font-semibold transition-colors hidden sm:inline-flex items-center gap-1">
           View All
@@ -173,7 +173,7 @@ const latestThumbnail = getYouTubeThumbnail(latestEpisode?.data.youtubeUrl)
       </div>
       
       <div class="text-center mt-12 sm:hidden">
-        <a href="/episodes" class="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 text-white rounded-full text-sm font-medium transition-colors">
+        <a href="/episodes" class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-colors" style="background: var(--tag-bg); color: var(--text-heading);">
           View All Episodes
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </a>

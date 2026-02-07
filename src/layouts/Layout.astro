@@ -78,7 +78,7 @@ const absoluteImageUrl = new URL(image, Astro.site).toString()
       }
     </script>
   </head>
-  <body class="bg-[#0a0a0a] text-[#d4d4d4] min-h-screen flex flex-col font-[var(--font-sans)] transition-colors dark:bg-[#0a0a0a] dark:text-[#d4d4d4]">
+  <body class="min-h-screen flex flex-col font-[var(--font-sans)] transition-colors" style="background-color: var(--bg); color: var(--text);">
     <!-- Skip to main content -->
     <a 
       href="#main-content" 
@@ -92,38 +92,38 @@ const absoluteImageUrl = new URL(image, Astro.site).toString()
       id="site-header"
       class:list={[
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        transparentHeader ? "header-transparent" : "bg-[#0a0a0a]/95 backdrop-blur-md border-b border-white/5"
+        transparentHeader ? "header-transparent" : "header-solid"
       ]}
     >
-      <nav class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <nav id="header-nav" class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <a href="/" class="flex items-center gap-3 group">
           <img src="/logo.jpg" alt="The Web Talk Show" class="w-9 h-9 rounded-lg object-cover ring-1 ring-white/10" />
-          <span class="font-[var(--font-display)] font-bold text-lg text-white hidden sm:inline tracking-tight">The Web Talk Show</span>
+          <span class="header-link font-[var(--font-display)] font-bold text-lg hidden sm:inline tracking-tight">The Web Talk Show</span>
         </a>
         
         <div class="flex items-center gap-5">
-          <a href="/episodes" class="text-[#8a8a8a] hover:text-white text-sm font-medium transition-colors">Episodes</a>
+          <a href="/episodes" class="header-link text-sm font-medium transition-colors hover:text-[#e63329]">Episodes</a>
           <button 
             type="button"
             onclick="openSearch()"
             aria-label="Open search (Press Command K)"
-            class="text-[#8a8a8a] hover:text-white text-sm font-medium flex items-center gap-2 transition-colors"
+            class="header-link text-sm font-medium flex items-center gap-2 transition-colors hover:text-[#e63329]"
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
             <span class="hidden sm:inline">Search</span>
-            <kbd class="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs text-[#8a8a8a] bg-white/5 rounded border border-white/10">
+            <kbd class="header-kbd hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs rounded">
               <span class="text-xs">⌘</span>K
             </kbd>
           </button>
-          <a href="/about" class="text-[#8a8a8a] hover:text-white text-sm font-medium transition-colors hidden sm:inline">About</a>
+          <a href="/about" class="header-link text-sm font-medium transition-colors hover:text-[#e63329] hidden sm:inline">About</a>
           
           <!-- Dark mode toggle -->
           <button 
             type="button"
             id="theme-toggle"
-            class="p-2 text-[#8a8a8a] hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+            class="header-link p-2 hover:text-[#e63329] rounded-lg transition-colors"
             aria-label="Toggle dark mode"
           >
             <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -143,9 +143,9 @@ const absoluteImageUrl = new URL(image, Astro.site).toString()
     </main>
 
     <!-- Footer -->
-    <footer class="bg-[#050505] border-t border-white/5 mt-auto relative overflow-hidden">
+    <footer class="border-t mt-auto relative overflow-hidden" style="background-color: var(--bg-footer); border-color: var(--border);">
       <!-- Waveform decoration -->
-      <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#e63329]/20 to-transparent"></div>
+      <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#e63329]/30 to-transparent"></div>
       <svg class="absolute top-4 left-0 w-full h-12 opacity-[0.04]" viewBox="0 0 1440 48" preserveAspectRatio="none">
         <path d="M0 24 Q180 0 360 24 Q540 48 720 24 Q900 0 1080 24 Q1260 48 1440 24" stroke="#e63329" stroke-width="2" fill="none"/>
       </svg>
@@ -173,7 +173,7 @@ const absoluteImageUrl = new URL(image, Astro.site).toString()
             </div>
           </div>
         </div>
-        <div class="border-t border-white/5 mt-8 pt-8 text-sm text-center text-[#8a8a8a]">
+        <div class="border-t border-white/10 mt-8 pt-8 text-sm text-center text-[#8a8a8a]">
           <p>&copy; {new Date().getFullYear()} The Web Talk Show. All rights reserved.</p>
         </div>
       </div>
@@ -216,14 +216,4 @@ const absoluteImageUrl = new URL(image, Astro.site).toString()
   </body>
 </html>
 
-<style>
-  .header-transparent {
-    background: transparent;
-    border-bottom: 1px solid transparent;
-  }
-  .header-transparent.header-scrolled {
-    background: rgba(10, 10, 10, 0.92);
-    backdrop-filter: blur(12px);
-    border-bottom-color: rgba(255, 255, 255, 0.05);
-  }
-</style>
+<!-- styles in global.css -->

@@ -14,8 +14,8 @@ const allTopics = [...new Set(episodes.flatMap(e => e.data.topics || []))].sort(
     <div class="max-w-4xl mx-auto px-4 sm:px-6">
       <!-- Header -->
       <div class="mb-12">
-        <h1 class="font-[var(--font-display)] font-extrabold text-white text-4xl sm:text-5xl tracking-tight mb-3">Episodes</h1>
-        <p class="text-[#8a8a8a] text-lg">{episodes.length} episodes and counting</p>
+        <h1 class="font-[var(--font-display)] font-extrabold text-4xl sm:text-5xl tracking-tight mb-3" style="color: var(--text-heading);">Episodes</h1>
+        <p class="text-lg" style="color: var(--text-muted);">{episodes.length} episodes and counting</p>
       </div>
       
       <!-- Topic filters -->
@@ -23,14 +23,15 @@ const allTopics = [...new Set(episodes.flatMap(e => e.data.topics || []))].sort(
         <div class="mb-10">
           <div class="flex flex-wrap gap-2">
             <button 
-              class="topic-filter px-3 py-1.5 bg-[#e63329]/15 text-[#e63329] text-sm rounded-full transition-all border border-[#e63329]/20 font-medium"
+              class="topic-filter active-filter px-3 py-1.5 bg-[#e63329]/15 text-[#e63329] text-sm rounded-full transition-all border border-[#e63329]/20 font-medium"
               data-topic="all"
             >
               All
             </button>
             {allTopics.slice(0, 12).map((topic) => (
               <button 
-                class="topic-filter px-3 py-1.5 bg-white/5 hover:bg-white/10 text-[#8a8a8a] hover:text-white text-sm rounded-full transition-all border border-white/5 hover:border-white/10"
+                class="topic-filter px-3 py-1.5 text-sm rounded-full transition-all hover:text-[#e63329]"
+                style="background: var(--tag-bg); color: var(--tag-text); border: 1px solid var(--tag-border);"
                 data-topic={topic}
               >
                 {topic}
