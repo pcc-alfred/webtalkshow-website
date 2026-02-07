@@ -37,6 +37,35 @@ function getYouTubeThumbnail(url: string | undefined): string | null {
 const episodeImage = getYouTubeThumbnail(episode.data.youtubeUrl) || '/og-image.jpg'
 const paddedNumber = String(episode.data.number).padStart(3, '0')
 
+const episodeUrl = `https://webtalk.show/episodes/${episode.id}`
+
+// Build associatedMedia array for audio/video
+const associatedMedia: any[] = []
+if (episode.data.audioUrl) {
+  associatedMedia.push({
+    "@type": "AudioObject",
+    "contentUrl": episode.data.audioUrl,
+    "encodingFormat": "audio/mpeg"
+  })
+}
+if (episode.data.youtubeUrl) {
+  associatedMedia.push({
+    "@type": "VideoObject",
+    "name": episode.data.title,
+    "description": episode.data.description,
+    "thumbnailUrl": episodeImage,
+    "uploadDate": episode.data.date.toISOString(),
+    "contentUrl": episode.data.youtubeUrl,
+    "embedUrl": episode.data.youtubeUrl.replace('watch?v=', 'embed/')
+  })
+}
+
+// Build guest/actor list
+const actors = (episode.data.guests || []).map((name: string) => ({
+  "@type": "Person",
+  "name": name
+}))
+
 const episodeJsonLd = {
   "@context": "https://schema.org",
   "@type": "PodcastEpisode",
@@ -46,7 +75,8 @@ const episodeJsonLd = {
   "duration": `PT${episode.data.duration.replace(':', 'M')}S`,
   "episodeNumber": episode.data.number,
   "image": episodeImage,
-  "url": `https://webtalk.show/episodes/${episode.id}`,
+  "url": episodeUrl,
+  "inLanguage": "en",
   "partOfSeries": {
     "@type": "PodcastSeries",
     "name": "The Web Talk Show",
@@ -54,8 +84,42 @@ const episodeJsonLd = {
   },
   "author": {
     "@type": "Person",
-    "name": "Armando J. Perez-Carreno"
+    "name": "Armando J. Perez-Carreno",
+    "url": "https://perezcarreno.com"
+  },
+  ...(actors.length > 0 ? { "actor": actors } : {}),
+  ...(associatedMedia.length > 0 ? { "associatedMedia": associatedMedia } : {}),
+  ...(episode.data.topics && episode.data.topics.length > 0 ? { "keywords": episode.data.topics.join(', ') } : {}),
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": ["article header h1", "article header p"]
   }
+}
+
+// BreadcrumbList for this episode
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://webtalk.show"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Episodes",
+      "item": "https://webtalk.show/episodes"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": `#${episode.data.number}: ${episode.data.title}`,
+      "item": episodeUrl
+    }
+  ]
 }
 ---
 
@@ -65,6 +129,7 @@ const episodeJsonLd = {
   image={episodeImage}
 >
   <script type="application/ld+json" set:html={JSON.stringify(episodeJsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
   
   <article class="max-w-4xl mx-auto px-4 sm:px-6 pt-24 pb-16">
     <!-- Episode Header -->

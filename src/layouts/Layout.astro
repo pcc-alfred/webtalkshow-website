@@ -15,7 +15,7 @@ const absoluteImageUrl = new URL(image, Astro.site).toString()
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth dark">
+<html lang="en" dir="ltr" class="scroll-smooth dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -50,7 +50,7 @@ const absoluteImageUrl = new URL(image, Astro.site).toString()
     
     <title>{title}</title>
     
-    <!-- JSON-LD Structured Data -->
+    <!-- JSON-LD: PodcastSeries -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "PodcastSeries",
@@ -61,13 +61,36 @@ const absoluteImageUrl = new URL(image, Astro.site).toString()
       "author": {
         "@type": "Person",
         "name": "Armando J. Perez-Carreno",
+        "url": "https://perezcarreno.com",
         "description": "Armando helps business owners eliminate operational bottlenecks and scale profitably through custom AI automation tailored to their specific workflows."
       },
       "publisher": {
         "@type": "Organization",
-        "name": "The Web Talk Show"
+        "name": "The Web Talk Show",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://webtalk.show/logo.jpg"
+        }
       },
-      "webFeed": "https://webtalk.show/rss.xml"
+      "webFeed": "https://webtalk.show/rss.xml",
+      "inLanguage": "en"
+    })} />
+
+    <!-- JSON-LD: WebSite with SearchAction (sitelinks search box) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "The Web Talk Show",
+      "url": "https://webtalk.show",
+      "description": "Learn what happens 'behind-the-scenes' in the day-to-day of different industries, and get inspired with what's possible.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://webtalk.show/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
     })} />
     
     <!-- Dark mode script -->

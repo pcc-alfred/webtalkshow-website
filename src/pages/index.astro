@@ -29,7 +29,7 @@ const latestThumbnail = getYouTubeThumbnail(latestEpisode?.data.youtubeUrl)
       <div class="absolute inset-0">
         <img 
           src={latestThumbnail} 
-          alt=""
+          alt={`${latestEpisode.data.title} - Latest episode of The Web Talk Show`}
           class="w-full h-full object-cover"
           loading="eager"
         />
