@@ -1,0 +1,182 @@
+---
+import { getCollection } from 'astro:content'
+import Layout from '../../layouts/Layout.astro'
+
+export async function getStaticPaths() {
+  // Filter out bad guest names
+  const badGuestNames = ['Atomic Blocks', 'Your Documents']
+  
+  const episodes = await getCollection('episodes')
+  
+  // Build a map of guests
+  const guestsMap = new Map<string, any[]>()
+  
+  episodes.forEach(episode => {
+    const guests = episode.data.guests || []
+    guests
+      .filter(guest => !badGuestNames.includes(guest))
+      .forEach(guest => {
+        const slug = guest.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')
+        if (!guestsMap.has(slug)) {
+          guestsMap.set(slug, [])
+        }
+        guestsMap.get(slug)?.push({
+          ...episode,
+          guestName: guest
+        })
+      })
+  })
+  
+  // Generate paths
+  return Array.from(guestsMap.entries()).map(([slug, episodes]) => ({
+    params: { guest: slug },
+    props: { 
+      episodes: episodes.sort((a, b) => 
+        new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+      ),
+      guestName: episodes[0].guestName
+    }
+  }))
+}
+
+const { episodes, guestName } = Astro.props
+const { guest } = Astro.params
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": guestName,
+  "subjectOf": episodes.map((ep: any) => ({
+    "@type": "PodcastEpisode",
+    "name": ep.data.title,
+    "url": `https://webtalk.show/episodes/${ep.slug}`,
+    "datePublished": ep.data.date.toISOString()
+  }))
+}
+
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://webtalk.show"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Guests",
+      "item": "https://webtalk.show/guests"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": guestName,
+      "item": `https://webtalk.show/guests/${guest}`
+    }
+  ]
+}
+
+function formatDate(date: Date): string {
+  return new Date(date).toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  })
+}
+
+const description = `All episodes featuring ${guestName} on The Web Talk Show. Listen to conversations about ${episodes.map((e: any) => e.data.topics?.[0]).filter(Boolean).slice(0, 3).join(', ')}.`
+---
+
+<Layout 
+  title={`${guestName} - The Web Talk Show`}
+  description={description}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbLd)} />
+  
+  <div class="pt-24 pb-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <!-- Breadcrumb -->
+      <nav class="mb-6 text-sm" style="color: var(--text-muted);">
+        <a href="/" class="hover:text-[#e63329] transition-colors">Home</a>
+        <span class="mx-2">/</span>
+        <a href="/guests" class="hover:text-[#e63329] transition-colors">Guests</a>
+        <span class="mx-2">/</span>
+        <span style="color: var(--text);">{guestName}</span>
+      </nav>
+      
+      <h1 class="font-[var(--font-display)] font-extrabold text-4xl sm:text-5xl tracking-tight mb-4" style="color: var(--text-heading);">
+        {guestName}
+      </h1>
+      
+      <p class="text-lg mb-10" style="color: var(--text-muted);">
+        {episodes.length} {episodes.length === 1 ? 'episode' : 'episodes'} on The Web Talk Show
+      </p>
+      
+      <div class="space-y-6">
+        {episodes.map((episode: any) => (
+          <article class="episode-card p-6 rounded-xl border transition-all duration-200" style="background: var(--bg-elevated); border-color: var(--border);">
+            <a href={`/episodes/${episode.slug}`} class="group">
+              <div class="flex items-start gap-4">
+                <span class="episode-number flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center font-[var(--font-display)] font-bold text-lg transition-all" style="background: var(--number-color); color: var(--text-muted);">
+                  {episode.data.number}
+                </span>
+                <div class="flex-1 min-w-0">
+                  <h2 class="font-[var(--font-display)] text-xl font-bold mb-2 group-hover:text-[#e63329] transition-colors" style="color: var(--text-heading);">
+                    {episode.data.title}
+                  </h2>
+                  
+                  <div class="flex flex-wrap items-center gap-3 text-sm mb-3" style="color: var(--text-muted);">
+                    <time datetime={episode.data.date.toISOString()}>
+                      {formatDate(episode.data.date)}
+                    </time>
+                    {episode.data.duration && (
+                      <>
+                        <span>•</span>
+                        <span>{episode.data.duration}</span>
+                      </>
+                    )}
+                  </div>
+                  
+                  <p class="text-sm leading-relaxed mb-4" style="color: var(--text);">
+                    {episode.data.description}
+                  </p>
+                  
+                  {episode.data.topics && episode.data.topics.length > 0 && (
+                    <div class="flex flex-wrap gap-2">
+                      {episode.data.topics.slice(0, 5).map((topic: string) => (
+                        <span class="text-xs px-2 py-1 rounded-md" style="background: var(--tag-bg); color: var(--tag-text); border: 1px solid var(--tag-border);">
+                          {topic}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .episode-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(230, 51, 41, 0.2) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .dark .episode-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .episode-card:hover .episode-number {
+    background: var(--number-hover) !important;
+    color: #e63329 !important;
+  }
+</style>

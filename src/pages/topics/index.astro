@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content'
+import Layout from '../../layouts/Layout.astro'
+
+// Get all episodes
+const episodes = await getCollection('episodes')
+
+// Build topic counts
+const topicCounts = new Map<string, number>()
+episodes.forEach(episode => {
+  const topics = episode.data.topics || []
+  topics.forEach(topic => {
+    topicCounts.set(topic, (topicCounts.get(topic) || 0) + 1)
+  })
+})
+
+// Sort topics alphabetically
+const sortedTopics = Array.from(topicCounts.entries())
+  .sort((a, b) => a[0].localeCompare(b[0]))
+
+// Generate topic slugs
+function slugify(text: string): string {
+  return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')
+}
+---
+
+<Layout 
+  title="Topics - The Web Talk Show"
+  description="Browse episodes by topic. Explore conversations about WordPress, AI, business operations, design, and more."
+>
+  <div class="pt-24 pb-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <h1 class="font-[var(--font-display)] font-extrabold text-4xl sm:text-5xl tracking-tight mb-4" style="color: var(--text-heading);">Topics</h1>
+      <p class="text-lg mb-12" style="color: var(--text-muted);">
+        Browse all episodes organized by topic.
+      </p>
+      
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {sortedTopics.map(([topic, count]) => (
+          <a 
+            href={`/topics/${slugify(topic)}`}
+            class="topic-card group p-5 rounded-xl border transition-all duration-200"
+            style="background: var(--bg-elevated); border-color: var(--border);"
+          >
+            <h2 class="font-[var(--font-display)] text-xl font-bold mb-2 group-hover:text-[#e63329] transition-colors" style="color: var(--text-heading);">
+              {topic}
+            </h2>
+            <p class="text-sm" style="color: var(--text-muted);">
+              {count} {count === 1 ? 'episode' : 'episodes'}
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .topic-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(230, 51, 41, 0.3) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dark .topic-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+</style>

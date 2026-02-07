@@ -2,32 +2,95 @@
 import Layout from '../layouts/Layout.astro'
 ---
 
-<Layout title="About - The Web Talk Show">
+<Layout 
+  title="About - The Web Talk Show"
+  description="The Web Talk Show is an interview podcast exploring behind-the-scenes insights across tech, AI, business operations, design, and leadership. Hosted by Armando J. Perez-Carreno."
+>
   <div class="pt-24 pb-16">
     <div class="max-w-3xl mx-auto px-4 sm:px-6">
-      <h1 class="font-[var(--font-display)] font-extrabold text-4xl sm:text-5xl tracking-tight mb-6" style="color: var(--text-heading);">About</h1>
+      <h1 class="font-[var(--font-display)] font-extrabold text-4xl sm:text-5xl tracking-tight mb-8" style="color: var(--text-heading);">About The Web Talk Show</h1>
       
-      <div class="prose max-w-none">
-        <p class="text-xl mb-10 leading-relaxed" style="color: var(--text); opacity: 0.8;">
-          Learn what happens 'behind-the-scenes' in the day-to-day of different industries, 
-          and get inspired with what's possible.
-        </p>
-        
-        <h2 class="font-[var(--font-display)] text-2xl font-bold mb-6" style="color: var(--text-heading);">The Host</h2>
-        <div class="not-prose flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-10 p-6 rounded-xl" style="background: var(--bg-elevated); border: 1px solid var(--border);">
-          <img 
-            src="/armando.jpg" 
-            alt="Armando J. Perez-Carreno" 
-            class="w-28 h-28 rounded-full object-cover ring-2 ring-[#e63329]/20 flex-shrink-0"
-          />
-          <div class="text-center sm:text-left">
-            <h3 class="font-[var(--font-display)] text-xl font-bold mb-2" style="color: var(--text-heading);">Armando J. Perez-Carreno</h3>
-            <p class="leading-relaxed" style="color: var(--text-muted);">
-              Armando helps business owners eliminate operational bottlenecks and scale profitably 
-              through custom AI automation tailored to their specific workflows.
-            </p>
+      <div class="prose max-w-none space-y-8">
+        <section>
+          <h2 class="font-[var(--font-display)] text-2xl font-bold mb-4" style="color: var(--text-heading);">What This Is</h2>
+          <p class="text-lg leading-relaxed mb-4" style="color: var(--text);">
+            The Web Talk Show is an interview podcast exploring behind-the-scenes insights from different industries. 
+            Each episode features conversations with founders, engineers, designers, and business operators who share 
+            practical knowledge about their work, their industries, and the systems they've built.
+          </p>
+          <p class="text-lg leading-relaxed" style="color: var(--text);">
+            Episodes are available in both video and audio formats, typically running 30-60 minutes, 
+            with new episodes released weekly.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-[var(--font-display)] text-2xl font-bold mb-4" style="color: var(--text-heading);">Who This Is For</h2>
+          <p class="text-lg leading-relaxed" style="color: var(--text);">
+            The show serves entrepreneurs, business owners, technology professionals, and curious minds 
+            interested in learning how things work in practice — not just in theory. Listeners include 
+            developers, designers, product managers, and anyone building or operating technology-driven businesses.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-[var(--font-display)] text-2xl font-bold mb-4" style="color: var(--text-heading);">Topics Covered</h2>
+          <p class="text-lg leading-relaxed mb-3" style="color: var(--text);">
+            Conversations span a range of industries and specialties, including:
+          </p>
+          <ul class="list-disc pl-6 space-y-2 text-lg" style="color: var(--text);">
+            <li>Technology and software development</li>
+            <li>Artificial intelligence and automation</li>
+            <li>Business operations and systems</li>
+            <li>Design and user experience</li>
+            <li>WordPress and web platforms</li>
+            <li>Marketing and growth</li>
+            <li>Leadership and team building</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="font-[var(--font-display)] text-2xl font-bold mb-4" style="color: var(--text-heading);">History</h2>
+          <p class="text-lg leading-relaxed" style="color: var(--text);">
+            The Web Talk Show launched in May 2024 and has published over 56 episodes featuring guests from 
+            companies, agencies, and projects across the technology and business landscape.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="font-[var(--font-display)] text-2xl font-bold mb-4" style="color: var(--text-heading);">Where to Listen</h2>
+          <div class="flex flex-wrap gap-4 mb-6">
+            <a href="https://open.spotify.com/show/00BTCbkMIG7mjeTP9zlsIq" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-colors" style="background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text);" onmouseover="this.style.borderColor='#1DB954'" onmouseout="this.style.borderColor='var(--border)'">
+              <span class="font-medium">Spotify</span>
+            </a>
+            <a href="https://podcasts.apple.com/us/podcast/the-web-talk-show/id1822997923" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-colors" style="background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text);" onmouseover="this.style.borderColor='#fc3c44'" onmouseout="this.style.borderColor='var(--border)'">
+              <span class="font-medium">Apple Podcasts</span>
+            </a>
+            <a href="https://www.youtube.com/playlist?list=PL1CI93sNrODNNJppF8HFcDKDHQVHLHN8v" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-colors" style="background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text);" onmouseover="this.style.borderColor='#FF0000'" onmouseout="this.style.borderColor='var(--border)'">
+              <span class="font-medium">YouTube</span>
+            </a>
           </div>
-        </div>
+        </section>
+        
+        <section>
+          <h2 class="font-[var(--font-display)] text-2xl font-bold mb-6" style="color: var(--text-heading);">The Host</h2>
+          <div class="not-prose flex flex-col sm:flex-row items-center sm:items-start gap-6 p-6 rounded-xl" style="background: var(--bg-elevated); border: 1px solid var(--border);">
+            <img 
+              src="/armando.jpg" 
+              alt="Armando J. Perez-Carreno" 
+              class="w-28 h-28 rounded-full object-cover ring-2 ring-[#e63329]/20 flex-shrink-0"
+            />
+            <div class="text-center sm:text-left">
+              <h3 class="font-[var(--font-display)] text-xl font-bold mb-2" style="color: var(--text-heading);">Armando J. Perez-Carreno</h3>
+              <p class="leading-relaxed text-base" style="color: var(--text);">
+                Armando J. Perez-Carreno is a business automation consultant who helps companies eliminate 
+                operational bottlenecks and scale more efficiently through custom AI automation systems. 
+                He works with business owners to design and implement automation workflows tailored to their 
+                specific operational needs.
+              </p>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   </div>

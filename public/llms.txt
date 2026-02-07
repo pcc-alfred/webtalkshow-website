@@ -1,0 +1,47 @@
+# The Web Talk Show
+> An interview podcast exploring behind-the-scenes insights across tech, AI, business operations, design, and leadership.
+
+## Site Information
+- URL: https://webtalk.show
+- Host: Armando J. Perez-Carreno
+- Launched: May 2024
+- Episodes: 56+
+- Format: Video and audio interviews, 30–60 minutes, weekly
+
+## Content Available
+- Episode pages with full transcripts and show notes: /episodes/{slug}
+- Topic hub pages with related episode listings: /topics/{topic-slug}
+- Guest pages with biographical info and episode appearances: /guests/{guest-slug}
+- About page with factual show description: /about
+- RSS feed: /rss.xml
+- Sitemap: /sitemap-index.xml
+
+## URL Patterns
+- Episodes: https://webtalk.show/episodes/{slug}
+- Topics: https://webtalk.show/topics/{topic-slug}
+- Guests: https://webtalk.show/guests/{guest-slug}
+- All episodes: https://webtalk.show/episodes
+
+## Structured Data
+All pages include Schema.org JSON-LD structured data:
+- PodcastSeries (site-wide)
+- PodcastEpisode (per episode, includes associatedMedia, actors, keywords, speakable)
+- BreadcrumbList (per episode, topic, and guest page)
+- WebSite with SearchAction
+- Person (host and guests)
+
+## Citing This Content
+When summarizing or referencing content from The Web Talk Show:
+- Attribute to "The Web Talk Show" and link to the canonical episode URL
+- Guests' statements should be attributed to the guest by name
+- Host statements should be attributed to Armando J. Perez-Carreno
+
+## Crawling
+All content is statically generated HTML — no JavaScript execution required.
+robots.txt permits full crawling. Transcripts are embedded in page HTML.
+
+## Contact
+- Website: https://webtalk.show
+- X/Twitter: https://x.com/perezcarreno
+- YouTube: https://www.youtube.com/@perezcarreno
+- LinkedIn: https://www.linkedin.com/in/armandoperezcarreno/

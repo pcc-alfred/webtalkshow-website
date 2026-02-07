@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content'
+import Layout from '../../layouts/Layout.astro'
+
+// Get all episodes
+const episodes = await getCollection('episodes')
+
+// Filter out bad guest names
+const badGuestNames = ['Atomic Blocks', 'Your Documents']
+
+// Build guest counts
+const guestCounts = new Map<string, number>()
+episodes.forEach(episode => {
+  const guests = episode.data.guests || []
+  guests
+    .filter(guest => !badGuestNames.includes(guest))
+    .forEach(guest => {
+      guestCounts.set(guest, (guestCounts.get(guest) || 0) + 1)
+    })
+})
+
+// Sort guests alphabetically
+const sortedGuests = Array.from(guestCounts.entries())
+  .sort((a, b) => a[0].localeCompare(b[0]))
+
+// Generate guest slugs
+function slugify(text: string): string {
+  return text.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '')
+}
+---
+
+<Layout 
+  title="Guests - The Web Talk Show"
+  description="Browse all guests who have appeared on The Web Talk Show. Industry experts, founders, developers, and business leaders sharing their insights."
+>
+  <div class="pt-24 pb-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <h1 class="font-[var(--font-display)] font-extrabold text-4xl sm:text-5xl tracking-tight mb-4" style="color: var(--text-heading);">Guests</h1>
+      <p class="text-lg mb-12" style="color: var(--text-muted);">
+        Browse all guests who have appeared on the show.
+      </p>
+      
+      <div class="grid gap-4 sm:grid-cols-2">
+        {sortedGuests.map(([guest, count]) => (
+          <a 
+            href={`/guests/${slugify(guest)}`}
+            class="guest-card group p-5 rounded-xl border transition-all duration-200"
+            style="background: var(--bg-elevated); border-color: var(--border);"
+          >
+            <h2 class="font-[var(--font-display)] text-xl font-bold mb-2 group-hover:text-[#e63329] transition-colors" style="color: var(--text-heading);">
+              {guest}
+            </h2>
+            <p class="text-sm" style="color: var(--text-muted);">
+              {count} {count === 1 ? 'episode' : 'episodes'}
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .guest-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(230, 51, 41, 0.3) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dark .guest-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+</style>
