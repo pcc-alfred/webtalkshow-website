@@ -15,6 +15,8 @@ topics:
   - No-Code Development
   - WhatsApp & Telegram AI Agents
 youtubeUrl: https://www.youtube.com/watch?v=OYX_eo7r0aQ
+spotifyUrl: https://open.spotify.com/episode/2SJKWwMScgghFhHPgcmDkb?si=63f9270971224ef3
+appleUrl: https://podcasts.apple.com/us/podcast/i-built-website-features-live-by-just-talking-to-my-ai-agent/id1822997923?i=1000749919401
 ---
 
 ## Show Notes
