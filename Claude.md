@@ -81,6 +81,11 @@ npm run sync:episodes
 Add `--dry-run` to preview without writing files.
 Use `--all` to bypass the "after latest" date check (legacy behavior).
 
+Audio-link enrichment (automatic):
+- Spotify show: `https://open.spotify.com/show/00BTCbkMIG7mjeTP9zlsIq`
+- Apple show id: `1822997923`
+- New imports try to auto-populate `spotifyUrl` and `appleUrl` by title/date matching.
+
 ## Workflow
 
 To keep the website updated:

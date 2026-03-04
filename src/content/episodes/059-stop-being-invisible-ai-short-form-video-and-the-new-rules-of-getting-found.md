@@ -16,6 +16,8 @@ topics:
   - Marketing automation framework
 # Audio sources
 youtubeUrl: https://www.youtube.com/watch?v=w1e7YyFKGNs
+spotifyUrl: https://open.spotify.com/episode/7BGJQ4I8OmE9ASjATcVweO
+appleUrl: https://podcasts.apple.com/us/podcast/stop-being-invisible-ai-short-form-video-and-the/id1822997923?i=1000751328635
 featured: false
 ---
 

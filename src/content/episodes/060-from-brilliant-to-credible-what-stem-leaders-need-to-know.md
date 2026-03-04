@@ -16,6 +16,8 @@ topics:
   - Trust-based go-to-market
 # Audio sources
 youtubeUrl: https://www.youtube.com/watch?v=OQycku8vnjA
+spotifyUrl: https://open.spotify.com/episode/4GvKVExtwZAFOXaWD6cGXd
+appleUrl: https://podcasts.apple.com/us/podcast/from-brilliant-to-credible-what-stem-leaders-need-to-know/id1822997923?i=1000752399433
 featured: false
 ---
 
