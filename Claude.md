@@ -59,6 +59,33 @@ Your markdown content here...
 - 05:00 - Topic 1
 ```
 
+## Episode Sync Shortcut
+
+If you say **"check for new episodes"**, I will do this:
+
+1. Fetch the latest videos from the playlist URL:
+   `https://www.youtube.com/playlist?list=PL1CI93sNrODNNJppF8HFcDKDHQVHLHN8v`
+2. Compare against existing `src/content/episodes/*.md` by YouTube video id.
+3. Add only episodes with a publish date newer than the latest episode already on the site (so we only append to the end).
+4. Add them automatically with the normalized Ian Cook style (richer always):
+   - Full frontmatter (`number`, `title`, `description`, `date`, `duration`, `hosts`, optional `guests`, `topics`, `youtubeUrl`)
+   - Show Notes, Topics Covered, and Links Mentioned sections
+   - incremented episode number sequence
+
+Run command:
+
+```bash
+npm run sync:episodes
+```
+
+Add `--dry-run` to preview without writing files.
+Use `--all` to bypass the "after latest" date check (legacy behavior).
+
+## Workflow
+
+To keep the website updated:
+- Run `npm run sync:episodes` when new episodes are posted.
+- Run `npm run build` before deploy to refresh Pagefind index.
 ## File Structure
 
 ```
@@ -104,3 +131,4 @@ Build outputs to `dist/`. Deploy to any static host:
 - **5175** - Web Talk Show Website (this project)
 - **5174** - Mom's Guide SA
 - **5173** - Web Talk Show Video App
+

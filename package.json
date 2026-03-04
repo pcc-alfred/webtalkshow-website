@@ -6,7 +6,8 @@
     "dev": "astro dev --port 5175",
     "build": "astro build && npx pagefind --site dist",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "sync:episodes": "node scripts/sync-youtube-episodes.mjs --playlist https://www.youtube.com/playlist?list=PL1CI93sNrODNNJppF8HFcDKDHQVHLHN8v"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.15",
