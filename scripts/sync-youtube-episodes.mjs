@@ -158,6 +158,33 @@ function extractBulletLines(text = '') {
     .filter(Boolean);
 }
 
+function compactSentence(input = '', maxLen = 180) {
+  const clean = String(input).replace(/\s+/g, ' ').trim();
+  if (clean.length <= maxLen) return clean;
+  const clipped = clean.slice(0, maxLen);
+  const lastSpace = clipped.lastIndexOf(' ');
+  return `${(lastSpace > 40 ? clipped.slice(0, lastSpace) : clipped).trim()}…`;
+}
+
+function makeShortDescription(full = '') {
+  const normalized = String(full).replace(/\s+/g, ' ').trim();
+  if (!normalized) return 'New episode from The Web Talk Show.';
+  const sentences = normalized.split(/(?<=[.!?])\s+/).filter(Boolean);
+  if (sentences.length === 0) return compactSentence(normalized, 180);
+  const one = compactSentence(sentences[0], 180);
+  return one;
+}
+
+function compactTopic(topic = '') {
+  let t = String(topic).replace(/\s+/g, ' ').trim();
+  t = t
+    .replace(/^why\s+/i, '')
+    .replace(/^how\s+/i, '')
+    .replace(/^what\s+/i, '')
+    .replace(/^the\s+/i, '');
+  return compactSentence(t, 58);
+}
+
 function cleanGuestName(raw = '') {
   let name = String(raw)
     .replace(/^(the\s+)/i, '')
@@ -197,10 +224,15 @@ function inferGuest(description = '') {
 
 function buildFrontmatter({ number, title, description, date, duration, youtubeUrl, playlistUrl }) {
   const d = duration || '00:00';
+  const shortDescription = sanitizeFrontmatterText(makeShortDescription(description));
   const cleanDescription = sanitizeFrontmatterText(description);
   const bullets = extractBulletLines(description);
   const urls = extractUrls(description);
   const guest = inferGuest(description);
+
+  const compactTopics = bullets.length > 0
+    ? bullets.slice(0, 5).map((b) => compactTopic(b)).filter(Boolean)
+    : [];
 
   const topicBullets = bullets.length > 0
     ? bullets.slice(0, 6).map((b) => `- ${sanitizeFrontmatterText(b)}`).join('\n')
@@ -210,8 +242,8 @@ function buildFrontmatter({ number, title, description, date, duration, youtubeU
     ? `guests:\n  - ${sanitizeFrontmatterText(guest)}\n`
     : '';
 
-  const topicsBlock = bullets.length > 0
-    ? bullets.slice(0, 5).map((b) => `  - ${sanitizeFrontmatterText(b)}`).join('\n')
+  const topicsBlock = compactTopics.length > 0
+    ? compactTopics.map((b) => `  - ${sanitizeFrontmatterText(b)}`).join('\n')
     : '  - The Web Talk Show';
 
   const linksBlock = [...new Set([playlistUrl, ...urls])]
@@ -221,7 +253,7 @@ function buildFrontmatter({ number, title, description, date, duration, youtubeU
   return `---
 number: ${number}
 title: "${sanitizeFrontmatterText(title)}"
-description: "${cleanDescription}"
+description: "${shortDescription}"
 date: ${date}
 duration: "${d}"
 hosts:
