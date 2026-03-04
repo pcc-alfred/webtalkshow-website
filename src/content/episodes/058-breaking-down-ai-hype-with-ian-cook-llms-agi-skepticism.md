@@ -1,7 +1,7 @@
 ---
 number: 58
 title: "Breaking Down AI Hype with Ian Cook: LLMs, AGI Skepticism, and Real-World Tools"
-description: "Ian Cook, SVP of AI at Clue, joins to break down how LLMs actually work, why AGI skepticism is healthy, and how real professionals are putting AI tools to work every day."
+description: "Ian Cook, SVP of AI at Qloo, joins to break down how LLMs actually work, why AGI skepticism is healthy, and how real professionals are putting AI tools to work every day."
 date: 2026-02-17
 duration: "49:30"
 hosts:
@@ -21,7 +21,7 @@ appleUrl: https://podcasts.apple.com/us/podcast/the-web-talk-show/id1822997923?i
 transcript: |
   **[00:00:00]**
 
-  Hello everyone, my name is Armando Perez-Carreno and welcome to the Web Talk Show. Today with us is Ian Palmer Cook. He's SVP of AI at Clue. Welcome Ian. How are you? I am fantastic Armando. Thanks for having me. Oh, I'm very excited about this show because we're talking about AI and many other things specifically, but there's a lot to unpack in what you're an expert in. So, let's get to it. Tell us a little bit for a brief background for people who are listening. What do you do right now at Clue? What is Clue? And then also what's your background and how did you get there? Absolutely. So Clue (QLO) is a startup based in New York. I am the SVP of AI. The whole company does what I think of as predictive customer and cultural intelligence — figuring out what preferences people are going to have over a wide graph of particular objects. Starting from a brand of shoes, going to hotels, music artists, restaurants. Understanding what that cultural information is underneath all of those and putting together a picture of how people's tastes shape what they're interested in interacting with. We offer personalization and recommendation tools for business companies that are selling these things through apps, promotions, social media.
+  Hello everyone, my name is Armando Perez-Carreno and welcome to the Web Talk Show. Today with us is Ian Palmer Cook. He's SVP of AI at Qloo. Welcome Ian. How are you? I am fantastic Armando. Thanks for having me. Oh, I'm very excited about this show because we're talking about AI and many other things specifically, but there's a lot to unpack in what you're an expert in. So, let's get to it. Tell us a little bit for a brief background for people who are listening. What do you do right now at Qloo? What is Qloo? And then also what's your background and how did you get there? Absolutely. So Qloo (QLOO) is a startup based in New York. I am the SVP of AI. The whole company does what I think of as predictive customer and cultural intelligence — figuring out what preferences people are going to have over a wide graph of particular objects. Starting from a brand of shoes, going to hotels, music artists, restaurants. Understanding what that cultural information is underneath all of those and putting together a picture of how people's tastes shape what they're interested in interacting with. We offer personalization and recommendation tools for business companies that are selling these things through apps, promotions, social media.
 
   **[00:02:00]**
 
@@ -106,7 +106,7 @@ transcript: |
 
 ## Show Notes
 
-Ian Cook, SVP of AI at Clue (QLO), joins Armando for a deep dive into the reality behind AI hype. With a background spanning 15+ years of machine learning, data science, and multiple startups, Ian brings a refreshingly grounded perspective to the conversation — from how LLMs actually work at their core (spoiler: it's all about predicting the next word) to why he's skeptical about AGI claims.
+Ian Cook, SVP of AI at Qloo (QLO), joins Armando for a deep dive into the reality behind AI hype. With a background spanning 15+ years of machine learning, data science, and multiple startups, Ian brings a refreshingly grounded perspective to the conversation — from how LLMs actually work at their core (spoiler: it's all about predicting the next word) to why he's skeptical about AGI claims.
 
 The conversation covers practical ground too: why learning to program still matters even when AI writes code, how "outcome engineering" requires real problem decomposition skills, and why the interview-your-AI-before-building approach produces dramatically better results. Ian shares insights from running the AI at Work community in Pittsburgh (AIORPGH.com), where professionals across industries share how they're actually putting AI tools to use — from marketing to legal operations.
 
@@ -125,7 +125,7 @@ They also dig into the addictive nature of AI-powered development, the security 
 
 ## Links Mentioned
 
-- [Clue (QLO)](https://www.clue.com) — Predictive customer and cultural intelligence
+- [Qloo (QLOO)](https://www.qloo.com) — Predictive customer and cultural intelligence
 - [Fierce Highways](https://fiercehighways.ai) — Ian Cook's website and skills marketplace
 - [AI at Work Pittsburgh](https://aiorpgh.com) — Professional AI community in Pittsburgh
 - [Seek Insights](https://seekinsights.com) — Storm and consumer behavior analytics
