@@ -3,7 +3,7 @@ number: 59
 title: "Stop Being Invisible: AI, Short-Form Video, and the New Rules of Getting Found"
 description: "Armando sits down with Jenna Nelson on practical AI systems to improve visibility, scale content output, and help small businesses get discovered faster."
 date: 2026-02-25
-duration: "00:00"
+duration: "53:39"
 hosts:
   - Armando
 guests:

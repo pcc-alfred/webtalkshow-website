@@ -3,7 +3,7 @@ number: 57
 title: "I Built Website Features Live by Just Talking to My AI Agent"
 description: "Armando builds website features live on stream using an AI coding agent. No IDE, no manual code edits. Just plain English instructions sent via Telegram."
 date: 2026-02-15
-duration: ""
+duration: "30:06"
 hosts:
   - Armando
 guests: []

@@ -3,7 +3,7 @@ number: 60
 title: "From Brilliant to Credible: What STEM Leaders Need to Know"
 description: "Armando talks with Shayna Rattler Davis about how technical leaders build trust, sharpen positioning, and communicate with credibility to investors, customers, and teams."
 date: 2026-03-02
-duration: "00:00"
+duration: "48:05"
 hosts:
   - Armando
 guests:
