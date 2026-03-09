@@ -3,7 +3,7 @@ number: 61
 title: "Groundwater Rights, Aquifers, and Drought: What Nobody Tells You"
 description: "A practical conversation on groundwater rights, aquifer pressure, and what drought risk really means for communities and businesses."
 date: 2026-03-07
-duration: "00:00"
+duration: "42:33"
 hosts:
   - Armando
 topics:

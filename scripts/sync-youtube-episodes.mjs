@@ -187,6 +187,29 @@ async function fetchPlaylistViaYtDlp(playlistUrlInput) {
   };
 }
 
+async function fetchYouTubeVideoDetails(videoId) {
+  if (!videoId) return null;
+  try {
+    const { stdout } = await execFileAsync('yt-dlp', ['--dump-single-json', '--no-playlist', `https://www.youtube.com/watch?v=${videoId}`], {
+      maxBuffer: 20 * 1024 * 1024,
+    });
+    const item = JSON.parse(stdout);
+    return {
+      description: stripHtml(item.description || ''),
+      duration: parseDurationSeconds(item.duration),
+      published: /^\d{8}$/.test(String(item.upload_date || ''))
+        ? `${item.upload_date.slice(0, 4)}-${item.upload_date.slice(4, 6)}-${item.upload_date.slice(6, 8)}`
+        : null,
+      publishedAt: /^\d{8}$/.test(String(item.upload_date || ''))
+        ? new Date(`${item.upload_date.slice(0, 4)}-${item.upload_date.slice(4, 6)}-${item.upload_date.slice(6, 8)}T00:00:00Z`)
+        : null,
+      title: item.title || null,
+    };
+  } catch {
+    return null;
+  }
+}
+
 async function fetchSpotifyEpisodes(showUrl) {
   if (!showUrl) return [];
   try {
@@ -465,17 +488,33 @@ async function main() {
   const output = [];
 
   for (const entry of planned) {
-    const spotifyMatch = findByTitle(entry, spotifyEpisodes);
-    const appleMatch = findAppleMatch(entry, appleEpisodes);
+    let enriched = { ...entry };
+    if (!enriched.duration || !enriched.description || enriched.description.length < 60) {
+      const details = await fetchYouTubeVideoDetails(enriched.videoId);
+      if (details) {
+        enriched = {
+          ...enriched,
+          title: details.title || enriched.title,
+          normalizedTitle: normalizeTitle(details.title || enriched.title),
+          description: details.description || enriched.description,
+          duration: details.duration || enriched.duration,
+          published: details.published || enriched.published,
+          publishedAt: details.publishedAt || enriched.publishedAt,
+        };
+      }
+    }
 
-    const file = buildFilename(nextNumber, entry.title);
+    const spotifyMatch = findByTitle(enriched, spotifyEpisodes);
+    const appleMatch = findAppleMatch(enriched, appleEpisodes);
+
+    const file = buildFilename(nextNumber, enriched.title);
     const content = buildFrontmatter({
       number: nextNumber,
-      title: entry.title,
-      description: entry.description,
-      date: entry.published,
-      duration: entry.duration,
-      youtubeUrl: entry.youtubeUrl,
+      title: enriched.title,
+      description: enriched.description,
+      date: enriched.published,
+      duration: enriched.duration,
+      youtubeUrl: enriched.youtubeUrl,
       spotifyUrl: spotifyMatch?.url || null,
       appleUrl: appleMatch?.url || null,
       playlistUrl,
@@ -483,11 +522,11 @@ async function main() {
 
     output.push({
       file,
-      title: entry.title,
-      youtubeUrl: entry.youtubeUrl,
+      title: enriched.title,
+      youtubeUrl: enriched.youtubeUrl,
       spotifyUrl: spotifyMatch?.url || null,
       appleUrl: appleMatch?.url || null,
-      date: entry.published,
+      date: enriched.published,
     });
 
     if (!dryRun) {
