@@ -2,6 +2,8 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 
 const episodesDir = path.join(process.cwd(), 'src', 'content', 'episodes');
 const defaultPlaylistUrl =
@@ -21,6 +23,7 @@ const appleShowId = appleArgIndex >= 0 ? args[appleArgIndex + 1] : process.env.A
 
 const dryRun = args.includes('--dry-run');
 const forceAll = args.includes('--all');
+const execFileAsync = promisify(execFile);
 
 function decodeEntities(input = '') {
   return input
@@ -151,6 +154,37 @@ function parseAtomFeed(feedText) {
   }
 
   return { playlistTitle: decodeEntities(playlistTitle), entries };
+}
+
+async function fetchPlaylistViaYtDlp(playlistUrlInput) {
+  const { stdout } = await execFileAsync('yt-dlp', ['--flat-playlist', '--dump-single-json', '--playlist-end', '200', playlistUrlInput], {
+    maxBuffer: 120 * 1024 * 1024,
+  });
+  const json = JSON.parse(stdout);
+  const entries = (json.entries || [])
+    .filter((e) => e?.id && e?.title)
+    .map((e) => {
+      const rawDate = String(e.upload_date || '').trim();
+      const pubDate = /^\d{8}$/.test(rawDate)
+        ? `${rawDate.slice(0, 4)}-${rawDate.slice(4, 6)}-${rawDate.slice(6, 8)}`
+        : new Date().toISOString().slice(0, 10);
+
+      return {
+        videoId: e.id,
+        title: e.title,
+        normalizedTitle: normalizeTitle(e.title),
+        published: pubDate,
+        description: stripHtml(e.description || '') || 'Episode transcript and notes added in the website. Update as needed.',
+        duration: parseDurationSeconds(e.duration),
+        youtubeUrl: e.webpage_url || `https://www.youtube.com/watch?v=${e.id}`,
+        publishedAt: new Date(`${pubDate}T00:00:00Z`),
+      };
+    });
+
+  return {
+    playlistTitle: json.title || 'YouTube Playlist',
+    entries,
+  };
 }
 
 async function fetchSpotifyEpisodes(showUrl) {
@@ -393,13 +427,18 @@ async function main() {
 
   const playlistId = parsePlaylistId(playlistUrl);
   const rssUrl = `https://www.youtube.com/feeds/videos.xml?playlist_id=${encodeURIComponent(playlistId)}`;
-  const playlistResponse = await fetch(rssUrl);
-  if (!playlistResponse.ok) {
-    throw new Error(`Failed to fetch playlist RSS (${playlistResponse.status} ${playlistResponse.statusText})`);
-  }
 
-  const feedText = await playlistResponse.text();
-  const { playlistTitle, entries } = parseAtomFeed(feedText);
+  let playlistTitle = 'YouTube Playlist';
+  let entries = [];
+
+  const playlistResponse = await fetch(rssUrl);
+  if (playlistResponse.ok) {
+    const feedText = await playlistResponse.text();
+    ({ playlistTitle, entries } = parseAtomFeed(feedText));
+  } else {
+    console.warn(`Playlist RSS unavailable (${playlistResponse.status}). Falling back to yt-dlp...`);
+    ({ playlistTitle, entries } = await fetchPlaylistViaYtDlp(playlistUrl));
+  }
   const existing = await readExistingEpisodeState();
 
   const [spotifyEpisodes, appleEpisodes] = await Promise.all([
